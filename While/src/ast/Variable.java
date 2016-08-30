@@ -40,6 +40,7 @@ public class Variable extends Exp {
 	
 	public Object evaluate(State state) throws Exception
 	{
-		return true;
+		Object value = state.get(id);
+        return value;
 	}
 }

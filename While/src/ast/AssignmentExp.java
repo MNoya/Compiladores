@@ -50,7 +50,9 @@ public class AssignmentExp extends Exp{
 	}
 	public Object evaluate(State state) throws Exception
 	{
-		return true;
+		Object value = expression.evaluate(state);
+        state.set(id, value);
+        return value;
 	}
 }
 

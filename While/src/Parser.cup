@@ -1,4 +1,4 @@
-package examples.while_ut1.parser;
+package parser;
 
 import ast.*;
 import java.io.*;

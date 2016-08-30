@@ -21,6 +21,17 @@ public class State {
     public void set(String id, Object value) {
         this.map.put(id, value);
     }
+    
+    @Override
+    public String toString()
+    {
+    	String s = "";
+    	for(String key : map.keySet()){
+    		Object valor = map.get(key);
+    		s += key+"="+valor.toString()+" | ";
+    	}
+		return s;
+    }
 
     @Override
     public boolean equals(Object obj) {

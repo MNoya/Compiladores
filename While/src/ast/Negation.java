@@ -40,6 +40,14 @@ public class Negation extends Exp {
 	
 	public Object evaluate(State state) throws Exception
 	{
-		return true;
+		Object cond = condition.evaluate(state);
+		
+		if (cond instanceof Boolean){
+			return !(Boolean) cond;
+		}
+		else
+		{
+			throw new Exception("Tipo no booleano "+cond.getClass().getName());
+		}
 	}
 }

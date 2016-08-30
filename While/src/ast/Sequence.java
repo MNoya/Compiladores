@@ -47,6 +47,6 @@ public class Sequence extends Stmt {
 
 	@Override
 	public State evaluate(State state) throws Exception {
-		return state;
+		return state; //TODO
 	}
 }
