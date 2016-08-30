@@ -7,7 +7,11 @@ public class State {
     HashMap<String, Object> map;
 
     public State() {
-        map = new HashMap<String, Object>();
+        map = new HashMap();
+    }
+
+    public State(HashMap<String, Object> map) {
+        this.map = map;
     }
 
     public Object get(String id) {
@@ -18,4 +22,10 @@ public class State {
         this.map.put(id, value);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        throw new Exception("Implementación pendiente");
+    }
+
+    
 }

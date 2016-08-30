@@ -19,7 +19,7 @@ public class WhileTest {
     public void test() throws Exception {
 
         State state = new State();
-        HashMap<Stmt, String> tests = Tests.getTests();
+        HashMap<Stmt,State> tests = Prueba.getTests();
         for (Stmt stmt : tests.keySet()) {
             Assert.assertEquals(stmt.evaluate(state),tests.get(stmt));
         }
