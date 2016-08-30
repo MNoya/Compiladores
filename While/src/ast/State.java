@@ -21,22 +21,32 @@ public class State {
     public void set(String id, Object value) {
         this.map.put(id, value);
     }
-    
+
     @Override
-    public String toString()
-    {
-    	String s = "";
-    	for(String key : map.keySet()){
-    		Object valor = map.get(key);
-    		s += key+"="+valor.toString()+" | ";
-    	}
-		return s;
+    public String toString() {
+        String s = "";
+        for (String key : map.keySet()) {
+            Object valor = map.get(key);
+            s += key + "=" + valor.toString() + " | ";
+        }
+        return s;
     }
 
     @Override
     public boolean equals(Object obj) {
-        throw new Exception("Implementación pendiente");
+        State state = (State) obj;
+        HashMap<String, Object> map2 = state.map;
+
+        if (map.keySet().size() != map2.keySet().size()) {
+            return false;
+        }
+
+        for (String id : map.keySet()) {
+            if (!map2.containsKey(id) || map.get(id) != map2.get(id)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    
 }
