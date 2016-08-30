@@ -45,6 +45,15 @@ public class Division extends Exp {
 	
 	public Object evaluate(State state) throws Exception
 	{
-		return true;
+		Object leftValue = left.evaluate(state);
+		Object rightValue = right.evaluate(state);
+		
+		if (leftValue instanceof Double && rightValue instanceof Double){
+			return (Double) left.evaluate(state) / (Double) right.evaluate(state);
+		}
+		else
+		{
+			throw new Exception("Tipos incompatibles: "+leftValue.getClass().getName()+ " "+rightValue.getClass().getName()+"\n");
+		}
 	}
 }

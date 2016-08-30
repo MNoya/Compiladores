@@ -45,6 +45,15 @@ public class WhileDo extends Stmt {
 
 	@Override
 	public State evaluate(State state) throws Exception {
-		return state;
+		Object cond = condition.evaluate(state);
+		if (!(cond instanceof Boolean))
+			throw new Exception("Tipos no booleano: "+cond.getClass().getName());
+		else
+		{
+	        while ((Boolean)condition.evaluate(state)){
+	        	state = body.evaluate(state);
+	        }
+	        return state;
+		}
 	}
 }

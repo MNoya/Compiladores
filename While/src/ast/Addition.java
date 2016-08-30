@@ -53,7 +53,7 @@ public class Addition extends Exp {
 		}
 		else
 		{
-			throw new Exception("Tipos incompatibles: "+leftValue.getClass().getName()+ " "+rightValue.getClass().getName());
+			throw new Exception("Tipos incompatibles: "+leftValue.getClass().getName()+ " "+rightValue.getClass().getName()+"\n");
 		}
 	}
 }

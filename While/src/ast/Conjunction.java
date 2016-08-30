@@ -45,6 +45,15 @@ public class Conjunction extends Exp {
 	
 	public Object evaluate(State state) throws Exception
 	{
-		return true;
+		Object leftValue = left.evaluate(state);
+		Object rightValue = right.evaluate(state);
+		
+		if (leftValue.getClass().equals(rightValue.getClass()) && leftValue instanceof Boolean){
+			return (Boolean) leftValue && (Boolean) rightValue;
+		}
+		else
+		{
+			throw new Exception("Tipos incompatibles: "+leftValue.getClass().getName()+ " "+rightValue.getClass().getName());
+		}
 	}
 }

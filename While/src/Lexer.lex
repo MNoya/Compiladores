@@ -15,7 +15,6 @@ import java.io.*;
 %implements Tokens
 
 %{:
-
 	public static List<Symbol> tokens(Reader input) throws IOException {
 		Lexer lexer = new Lexer(input);
 		List<Symbol> result = new ArrayList<Symbol>();
