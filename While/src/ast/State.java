@@ -42,7 +42,7 @@ public class State {
         }
 
         for (String id : map.keySet()) {
-            if (!map2.containsKey(id) || map.get(id) != map2.get(id)) {
+            if (!map2.containsKey(id) || !map.get(id).equals(map2.get(id))) {
                 return false;
             }
         }

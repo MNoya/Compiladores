@@ -18,10 +18,20 @@ public class WhileTest {
     @Test
     public void test() throws Exception {
 
-        State state = new State();
+        
+        
         HashMap<Stmt,State> tests = Prueba.getTests();
         for (Stmt stmt : tests.keySet()) {
-            Assert.assertEquals(stmt.evaluate(state),tests.get(stmt));
+        	
+            State state = new State();
+            
+        	State evaluado = stmt.evaluate(state);
+        	State esperado = tests.get(stmt);
+        	
+        	System.out.println("Codigo: "+stmt.unparse());
+			System.out.println("Evaluado: "+ evaluado);
+			System.out.println("Esperado: "+ esperado);
+            Assert.assertEquals(evaluado, esperado);
         }
     }
 }
