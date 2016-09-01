@@ -57,12 +57,14 @@ terminal IF;
 terminal PRINT;
 terminal LENGTH;
 terminal DEFINED;
+terminal DIVISION;
 terminal DOUBLE_EQUALS_SIGN;
 precedence left EXCLAMATION_MARK;
 precedence left ASTERISK;
 precedence left PLUS_SIGN, HYPHEN_MINUS;
 precedence left DOUBLE_AMPERSAND;
 precedence left ELSE;
+precedence left DIVISION;
 precedence nonassoc LESS_THAN_OR_EQUAL;
 precedence nonassoc DOUBLE_EQUALS_SIGN;
 
@@ -87,11 +89,9 @@ stmt ::=
 
 exp ::=
 		NUM:$1 
-		{: RESULT = new Numeral($1); :}
-		
+		{: RESULT = new Numeral($1); :}	
 	|   STR:$1 
 		{: RESULT = new Literal($1); :}
-	
 	|	ID:$1 
 		{: RESULT = new Variable($1); :}
 	|	exp:$1 ASTERISK:$2 exp:$3 
@@ -100,6 +100,8 @@ exp ::=
 		{: RESULT = new Addition($1, $3); :}
 	|	exp:$1 HYPHEN_MINUS:$2 exp:$3 
 		{: RESULT = new Subtraction($1, $3); :}
+	|	exp:$1 DIVISION:$2 exp:$3 
+		{: RESULT = new Division($1, $3); :}
 	|	LEFT_PARENTHESIS:$1 exp:$2 RIGHT_PARENTHESIS:$3 
 		{: RESULT = $2; :}
 	|	TRUE:$1 

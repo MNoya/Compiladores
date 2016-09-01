@@ -53,6 +53,8 @@ import java.io.*;
 	{ return new Symbol(PLUS_SIGN, yyline, yycolumn, yytext()); }
 "-"
 	{ return new Symbol(HYPHEN_MINUS, yyline, yycolumn, yytext()); }
+"/"
+	{ return new Symbol(DIVISION, yyline, yycolumn, yytext()); }
 ";"
 	{ return new Symbol(SEMICOLON, yyline, yycolumn, yytext()); }
 "<="
