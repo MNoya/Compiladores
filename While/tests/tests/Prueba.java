@@ -91,9 +91,9 @@ public class Prueba {
             }), 
             
             //Division
-//            new Prueba("x=(10/5);", new Object[][]{
-//                new Object[]{"x", 2}
-//            }), 
+            new Prueba("x=(10/5);", new Object[][]{
+                new Object[]{"x", 2.0}
+            }), 
             
             //IfThenElse
             new Prueba("if (1==0) then x=1; else x=2;", new Object[][]{
