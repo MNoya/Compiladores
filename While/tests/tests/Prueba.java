@@ -133,11 +133,18 @@ public class Prueba {
             //TruthValue
             new Prueba("x=false;", new Object[][]{
                 new Object[]{"x", false}
-            })
+            }),
             
-            //Numeral
-//            new Prueba("while (x==1) do x=1;", new Object[][]{
-//            })
+            //Length
+            new Prueba("x=length(\"prueba\");", new Object[][]{
+                new Object[]{"x", 6.0}
+            }),
+            
+            //Defined
+            new Prueba("x=defined(pepe);", new Object[][]{
+                new Object[]{"x", false}
+            })
+          
         };
     }
 }
