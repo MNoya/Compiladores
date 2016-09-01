@@ -54,8 +54,10 @@ terminal SKIP;
 terminal WHILE;
 terminal ELSE;
 terminal IF;
+terminal PRINT;
+terminal LENGTH;
+terminal DEFINED;
 terminal DOUBLE_EQUALS_SIGN;
-
 precedence left EXCLAMATION_MARK;
 precedence left ASTERISK;
 precedence left PLUS_SIGN, HYPHEN_MINUS;
@@ -75,12 +77,12 @@ stmt ::=
 		{: RESULT = new Sequence($2.toArray(new Stmt[$2.size()])); :}
 	|	WHILE:$1 exp:$2 DO:$3 stmt:$4 
 		{: RESULT = new WhileDo($2, $4); :}
-	
 	|	IF:$1 exp:$2 THEN:$3 stmt:$4 ELSE:$5 stmt:$6 
 		{: RESULT = new IfThenElse($2, $4, $6); :}
-	
 	|	IF:$1 exp:$2 THEN:$3 stmt:$4 
 		{: RESULT = new IfThenElse($2, $4,null); :}
+	|	PRINT:$1 LEFT_PARENTHESIS:$2 exp:$3 RIGHT_PARENTHESIS:$4 SEMICOLON:$5
+		{: RESULT = new Print($3); :}
 ;
 
 exp ::=
@@ -114,9 +116,11 @@ exp ::=
 		{: RESULT = new Conjunction($1, $3); :}
 	|   ID:$1 EQUALS_SIGN:$2 exp:$3
 		{: RESULT = new AssignmentExp($1, $3); :}
-
+	|   LENGTH:$1 LEFT_PARENTHESIS:$2 exp:$3 RIGHT_PARENTHESIS:$4
+		{: RESULT = new Length($3); :}
+	| 	DEFINED:$1 LEFT_PARENTHESIS:$2 ID:$3 RIGHT_PARENTHESIS:$4
+		{: RESULT = new Defined($3); :}
 ;
-
 repeat$stmt ::=
 		
 		{: List<Stmt> $0;

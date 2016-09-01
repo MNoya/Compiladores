@@ -50,6 +50,8 @@ public class Addition extends Exp {
 		
 		if (leftValue instanceof Double && rightValue instanceof Double){
 			return (Double) left.evaluate(state) + (Double) right.evaluate(state);
+		}else if (leftValue instanceof String || rightValue instanceof String){
+			return left.evaluate(state).toString() + right.evaluate(state).toString();
 		}
 		else
 		{
