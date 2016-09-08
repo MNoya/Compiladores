@@ -2,15 +2,17 @@ package ast;
 
 import java.util.Random;
 
-public class AssignmentExp extends Exp{
+import ast.CheckState.Tipo;
+
+public class AssignmentExp extends Exp {
 
 	public final String id;
 	public final Exp expression;
 
 	public AssignmentExp(String id, Exp expression) {
-			this.id = id;
-			this.expression = expression;
-		}
+		this.id = id;
+		this.expression = expression;
+	}
 
 	@Override
 	public String unparse() {
@@ -48,14 +50,19 @@ public class AssignmentExp extends Exp{
 		expression = Exp.generate(random, min - 1, max - 1);
 		return new AssignmentExp(id, expression);
 	}
-	public Object evaluate(State state) throws Exception
-	{
+
+	public Object evaluate(State state) throws Exception {
 		Object value = expression.evaluate(state);
-        state.set(id, value);
-        return value;
+		state.set(id, value);
+		return value;
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		Tipo tipoExp = expression.check(s);
+
+		s.set(id, tipoExp, true);
+		
+		return tipoExp;
 	}
 }
-
-
-
-

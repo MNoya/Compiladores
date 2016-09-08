@@ -1,5 +1,7 @@
 package ast;
 
+import ast.CheckState.Tipo;
+
 public class Defined extends Exp{
 	public final String id;
 
@@ -30,5 +32,10 @@ public class Defined extends Exp{
 	@Override
 	public Object evaluate(State state) throws Exception {
 		return (state.get(id) != null);
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		return Tipo.TRUTHVALUE;
 	}
 }

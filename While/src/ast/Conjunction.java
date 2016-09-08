@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /** Representación de conjunciones booleanas (AND).
 */
 public class Conjunction extends Exp {
@@ -55,5 +57,19 @@ public class Conjunction extends Exp {
 		{
 			throw new Exception("Tipos incompatibles: "+leftValue.getClass().getName()+ " "+rightValue.getClass().getName());
 		}
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		Tipo leftTipo = left.check(s);
+		Tipo rightTipo = right.check(s);
+		
+		if (leftTipo == Tipo.TRUTHVALUE && leftTipo == rightTipo){
+			return Tipo.TRUTHVALUE;
+		} else {
+			throw new Exception("Type mismatch: " + leftTipo + " vs. " + rightTipo);
+		}
+		
+		
 	}
 }

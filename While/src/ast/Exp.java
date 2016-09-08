@@ -1,6 +1,8 @@
 package ast;
 
-import java.util.*;
+import java.util.Random;
+import ast.CheckState;
+import ast.CheckState.Tipo;
 
 /** Categoría sintáctica de las expresiones aritméticas de While, las 
 	construcciones del lenguaje que evalúan a un número.
@@ -42,4 +44,6 @@ public abstract class Exp {
 	}
 
 	public abstract Object evaluate(State state) throws Exception;
+	
+	public abstract Tipo check(CheckState s) throws Exception;
 }

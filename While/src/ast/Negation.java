@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /** Representación de las negaciones de expresiones booleanas.
 */
 public class Negation extends Exp {
@@ -48,6 +50,18 @@ public class Negation extends Exp {
 		else
 		{
 			throw new Exception("Tipo no booleano "+cond.getClass().getName());
+		}
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		Tipo leftTipo = condition.check(s);
+		
+		
+		if (leftTipo == Tipo.TRUTHVALUE){
+			return Tipo.TRUTHVALUE;
+		} else {
+			throw new Exception("Type mismatch: " + leftTipo);
 		}
 	}
 }

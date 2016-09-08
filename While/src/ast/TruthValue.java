@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /** Representación de valores de verdad (cierto o falso).
 */
 public class TruthValue extends Exp {
@@ -41,5 +43,11 @@ public class TruthValue extends Exp {
 	public Object evaluate(State state) throws Exception
 	{
 		return value;
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		
+		return Tipo.TRUTHVALUE;
 	}
 }

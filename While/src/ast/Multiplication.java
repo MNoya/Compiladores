@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /** Representación de multiplicaciones.
 */
 public class Multiplication extends Exp {
@@ -54,6 +56,18 @@ public class Multiplication extends Exp {
 		else
 		{
 			throw new Exception("Tipos incompatibles: "+leftValue.getClass().getName()+ " "+rightValue.getClass().getName()+"\n");
+		}
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		Tipo leftTipo = left.check(s);
+		Tipo rightTipo = right.check(s);
+
+		if (leftTipo == Tipo.NUMERAL && leftTipo == rightTipo) {
+			return leftTipo;
+		} else {
+			throw new Exception("Type mismatch: " + leftTipo + " vs. " + rightTipo);
 		}
 	}
 }

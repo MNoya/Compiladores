@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /**
  * Representación de las comparaciones por menor o igual.
  */
@@ -78,6 +80,18 @@ public class CompareLessOrEqual extends Exp {
 		throw new Exception(
 				"Tipos incompatibles: " + leftValue.getClass().getName() + " " + rightValue.getClass().getName());
 
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		Tipo leftTipo = left.check(s);
+		Tipo rightTipo = right.check(s);
+		
+		if (leftTipo != null && leftTipo == rightTipo){
+			return Tipo.TRUTHVALUE;
+		} else {
+			throw new Exception("Type mismatch: " + leftTipo + " vs. " + rightTipo);
+		}
 	}
 
 }

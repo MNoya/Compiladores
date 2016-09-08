@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import ast.CheckState.Tipo;
+
 public class Literal extends Exp{
 	public final String literal;
 
@@ -39,5 +41,10 @@ public class Literal extends Exp{
 	public Object evaluate(State state) throws Exception
 	{
 		return literal;
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		return Tipo.LITERAL;
 	}
 }

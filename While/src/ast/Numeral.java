@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /** Representación de constantes numéricas o numerales.
 */
 public class Numeral extends Exp {
@@ -41,5 +43,11 @@ public class Numeral extends Exp {
 	public Object evaluate(State state) throws Exception
 	{
         return number;
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		
+		return Tipo.NUMERAL;
 	}
 }

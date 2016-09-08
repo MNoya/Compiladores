@@ -1,5 +1,7 @@
 package ast;
 
+import ast.CheckState.Tipo;
+
 public class Length extends Exp{
 	public final Exp expression;
 
@@ -30,5 +32,16 @@ public class Length extends Exp{
 	@Override
 	public Object evaluate(State state) throws Exception {
 		return (double) expression.evaluate(state).toString().length();
+	}
+
+	@Override
+	public Tipo check(CheckState s) throws Exception {
+		Tipo tipoExp = expression.check(s);
+		
+		if(tipoExp == Tipo.LITERAL){
+			return Tipo.LITERAL;
+		} else{
+			throw new Exception("Se le pasa algo a length() que no es un LITERAL.");
+		}
 	}
 }
