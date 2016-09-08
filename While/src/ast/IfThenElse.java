@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /**
  * Representación de las sentencias condicionales.
  */
@@ -80,5 +82,23 @@ public class IfThenElse extends Stmt {
         {
         	throw new Exception("Condicion de IfThenElse no evalua a un valor booleano");
         }
+    }
+    
+    @Override
+    public CheckState check(CheckState cState) throws Exception{
+        Tipo tipo = condition.check(cState);
+        if (tipo != Tipo.TRUTHVALUE)
+        	throw new Exception("Error de Tipos: Condicion de IfThenElse no booleana");
+        else {
+        	CheckState thenBodyState = thenBody.check(cState);
+        	CheckState elseBodyState = elseBody.check(cState);
+        
+        	for (String id : thenBodyState.map.keySet()) {
+                if (elseBodyState.map.containsKey(id)) {
+                	cState.set(id, tipo, true);
+                }
+            }
+        }
+		return cState;
     }
 }

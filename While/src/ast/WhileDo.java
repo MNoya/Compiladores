@@ -56,4 +56,10 @@ public class WhileDo extends Stmt {
 	        return state;
 		}
 	}
+
+	@Override
+	public CheckState check(CheckState cState) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

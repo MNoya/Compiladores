@@ -41,5 +41,5 @@ public abstract class Stmt{
     }
     
     public abstract State evaluate(State state) throws Exception;
-    
+    public abstract CheckState check(CheckState cState) throws Exception;
 }

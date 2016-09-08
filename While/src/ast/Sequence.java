@@ -49,4 +49,10 @@ public class Sequence extends Stmt {
 	public State evaluate(State state) throws Exception {
 		return state; //TODO
 	}
+
+	@Override
+	public CheckState check(CheckState cState) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

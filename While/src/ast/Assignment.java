@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import ast.CheckState.Tipo;
+
 /**
  * Representación de las asignaciones de valores a variables.
  */
@@ -60,5 +62,12 @@ public class Assignment extends Stmt {
         state.set(id, value);
         return state;        
     }
+
+	@Override
+	public CheckState check(CheckState cState) throws Exception {
+		Tipo tipo = expression.check(cState);
+		cState.set(id, tipo, true);
+        return cState;
+	}
 
 }

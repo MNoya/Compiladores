@@ -1,5 +1,7 @@
 package ast;
 
+import ast.CheckState.Tipo;
+
 public class Print extends Stmt{
 	public final Exp expression;
 
@@ -32,4 +34,10 @@ public class Print extends Stmt{
 		System.out.println(expression.evaluate(state).toString());
 		return state;
 	}
+	
+	@Override
+    public CheckState check(CheckState cState) throws Exception{
+        expression.check(cState);
+        return cState;
+    }
 }
