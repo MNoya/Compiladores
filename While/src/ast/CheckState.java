@@ -67,6 +67,6 @@ public class CheckState {
 	}
 
 	public enum Tipo {
-		LITERAL, NUMERAL;
+		LITERAL, NUMERAL, TRUTHVALUE;
 	}
 }
