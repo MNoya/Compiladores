@@ -48,6 +48,12 @@ public class CheckState {
 		}
 		return true;
 	}
+	
+	public CheckState clone(){
+		CheckState n = new CheckState();
+		n.map = (HashMap<String, Pair>) this.map.clone();
+		return n;
+	}
 
 	public class Pair {
 

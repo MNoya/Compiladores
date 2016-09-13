@@ -87,18 +87,24 @@ public class IfThenElse extends Stmt {
     @Override
     public CheckState check(CheckState cState) throws Exception{
         Tipo tipo = condition.check(cState);
-        if (tipo != Tipo.TRUTHVALUE)
+        if (tipo != Tipo.TRUTHVALUE) {
         	throw new Exception("Error de Tipos: Condicion de IfThenElse no booleana");
-        else {
-        	CheckState thenBodyState = thenBody.check(cState);
-        	CheckState elseBodyState = elseBody.check(cState);
-        
-        	for (String id : thenBodyState.map.keySet()) {
-                if (elseBodyState.map.containsKey(id)) {
-                	cState.set(id, tipo, true);
-                }
-            }
         }
-		return cState;
-    }
+
+    	CheckState body = cState;
+    	CheckState thenBodyState = thenBody.check(cState.clone());
+    	if (elseBody != null) {
+        	body = elseBody.check(cState);
+    	}
+    	
+    	for (String id : body.map.keySet()) {
+    		if (thenBodyState.map.containsKey(id)) {
+    			if (body.map.get(id).tipo == thenBodyState.map.get(id).tipo) {
+    				thenBodyState.set(id, tipo, true);
+    			} else
+    				thenBodyState.map.remove(id);
+	            }	
+            }
+    	return thenBodyState;
+    	}
 }

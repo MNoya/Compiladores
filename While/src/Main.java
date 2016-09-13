@@ -13,11 +13,11 @@ public class Main {
 				try {
 					if (line.length() > 0) {
 						Stmt prog = (Stmt)(Parser.parse(line).value);
-						s = prog.evaluate(s);
+						//s = prog.evaluate(s);
 						c = prog.check(c);
 						
 						System.out.print("\t"+ prog +"\n> ");
-						System.out.print("\t"+ s +"\n> ");
+						//System.out.print("\t"+ s +"\n> ");
 						System.out.println("\t"+ c +"\n> ");
 					}
 				} catch (Exception err) {

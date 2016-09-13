@@ -2,6 +2,8 @@ package ast;
 
 import java.util.*;
 
+import ast.CheckState.Tipo;
+
 /** Representación de las iteraciones while-do.
 */
 public class WhileDo extends Stmt {
@@ -59,7 +61,24 @@ public class WhileDo extends Stmt {
 
 	@Override
 	public CheckState check(CheckState cState) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	    Tipo tipo = condition.check(cState);
+        if (tipo != Tipo.TRUTHVALUE) {
+        	throw new Exception("Error de Tipos: Condicion de WhileDo no booleana");
+        }
+        
+        CheckState estado = cState;
+    	CheckState whileBody = body.check(cState.clone());
+    	
+    	for (String id : estado.map.keySet()) {
+    		if (whileBody.map.containsKey(id)) {
+    			if (estado.map.get(id).tipo == whileBody.map.get(id).tipo) {
+    				whileBody.map.get(id).tipo = estado.map.get(id).tipo;
+    			} else {
+    				whileBody.map.remove(id);
+	            }	
+            }
+    	}
+		return whileBody;
+        
 	}
 }
