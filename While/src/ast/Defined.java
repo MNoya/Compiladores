@@ -1,7 +1,5 @@
 package ast;
 
-import ast.CheckState.Tipo;
-
 public class Defined extends Exp{
 	public final String id;
 

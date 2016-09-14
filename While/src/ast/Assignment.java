@@ -2,8 +2,6 @@ package ast;
 
 import java.util.Random;
 
-import ast.CheckState.Tipo;
-
 /**
  * Representación de las asignaciones de valores a variables.
  */

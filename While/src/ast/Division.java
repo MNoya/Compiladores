@@ -1,8 +1,6 @@
 package ast;
 
-import java.util.*;
-
-import ast.CheckState.Tipo;
+import java.util.Random;
 
 /** Representación de divisiones.
 */

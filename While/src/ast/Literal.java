@@ -2,8 +2,6 @@ package ast;
 
 import java.util.Random;
 
-import ast.CheckState.Tipo;
-
 public class Literal extends Exp{
 	public final String literal;
 

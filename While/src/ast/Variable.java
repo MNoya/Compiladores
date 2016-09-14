@@ -1,9 +1,8 @@
 package ast;
 
-import java.util.*;
+import java.util.Random;
 
 import ast.CheckState.Pair;
-import ast.CheckState.Tipo;
 
 /**
  * Representación de usos de variable en expresiones.

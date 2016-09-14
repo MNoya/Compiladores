@@ -1,7 +1,5 @@
 package ast;
 
-import ast.CheckState.Tipo;
-
 public class Length extends Exp{
 	public final Exp expression;
 

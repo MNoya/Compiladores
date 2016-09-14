@@ -1,8 +1,6 @@
 package ast;
 
 import java.util.Random;
-import ast.CheckState;
-import ast.CheckState.Tipo;
 
 /** Categoría sintáctica de las expresiones aritméticas de While, las 
 	construcciones del lenguaje que evalúan a un número.

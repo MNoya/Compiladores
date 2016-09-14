@@ -1,7 +1,5 @@
 package ast;
 
-import ast.CheckState.Tipo;
-
 public class Print extends Stmt{
 	public final Exp expression;
 

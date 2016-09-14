@@ -71,8 +71,4 @@ public class CheckState {
 			return this.tipo == pair.tipo && this.inicializado == pair.inicializado;
 		}
 	}
-
-	public enum Tipo {
-		LITERAL, NUMERAL, TRUTHVALUE;
-	}
 }
