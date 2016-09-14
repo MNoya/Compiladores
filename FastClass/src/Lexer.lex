@@ -58,14 +58,14 @@ import java.io.*;
     { return new Symbol(RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
 "class"
     { return new Symbol(CLASS, yyline, yycolumn, yytext()); }
-
+[rwc]
+	{ return new Symbol(GET_SET_CON, yyline, yycolumn, yytext()); }
+"output"
+	{ return new Symbol(OUTPUT, yyline, yycolumn, yytext()); }
 [a-zA-Z_][a-zA-Z0-9_]*
     { String $1 = yytext(); String $0;
       $0 = $1;
       return new Symbol(ID, yyline, yycolumn, $0); }
-
-//how to handle r-w-c?
-
 [ \t\r\n\f\v]+
     { /* Ignore */ }
 \/\*+([^\*]|\*+[^\/])*\*+\/

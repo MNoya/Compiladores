@@ -1,0 +1,48 @@
+package parser;
+
+//import ast.*;
+import java.io.*;
+import java.util.*;
+import java_cup.runtime.Symbol;
+
+parser code {:
+
+	public void syntax_error(Symbol currentToken) {
+		report_error("Syntax error at [" + (currentToken.left+1) +"," + (currentToken.right+1) +"]!", null);
+	}
+
+	public static Symbol parse(Reader input) throws Exception {
+		return (new Parser(new Lexer(input))).parse();
+	}
+
+	public static Symbol parse(String input) throws Exception {
+		return parse(new StringReader(input));
+	}
+
+	public static void main(String[] args) throws Exception {
+		if (args.length < 1) {
+			System.out.println(parse(new InputStreamReader(System.in, "UTF8")).value);
+		} else for (int i = 0; i < args.length; ++i) {
+			System.out.println(parse(new InputStreamReader(new FileInputStream(args[i]), "UTF8")).value);
+		}
+	}
+:}
+
+non terminal Stmt stmt;
+terminal DOUBLE_EQUALS_SIGN;
+precedence nonassoc DOUBLE_EQUALS_SIGN;
+
+LEFT_PARENTHESIS;
+RIGHT_PARENTHESIS;
+COLON;
+COMMA;
+DOUBLE_LEFT_CURLY_BRACKET;
+DOUBLE_RIGHT_CURLY_BRACKET;
+LEFT_CURLY_BRACKET;
+RIGHT_CURLY_BRACKET;
+CLASS;
+GET_SET_CON;
+OUTPUT;
+ID;
+
+start with file;
