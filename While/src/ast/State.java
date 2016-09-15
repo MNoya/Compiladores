@@ -4,22 +4,22 @@ import java.util.HashMap;
 
 public class State {
 
-    HashMap<String, Object> map;
+    HashMap<String, Pair> map;
 
     public State() {
-        map = new HashMap();
+        map = new HashMap<String, Pair>();
     }
 
-    public State(HashMap<String, Object> map) {
+    public State(HashMap<String, Pair> map) {
         this.map = map;
     }
 
-    public Object get(String id) {
+    public Pair get(String id) {
         return map.get(id);
     }
 
-    public void set(String id, Object value) {
-        this.map.put(id, value);
+    public void set(String id, Tipo tipo, Object value) {
+        this.map.put(id, new Pair(tipo, value));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class State {
     @Override
     public boolean equals(Object obj) {
         State state = (State) obj;
-        HashMap<String, Object> map2 = state.map;
+        HashMap<String, Pair> map2 = state.map;
 
         if (map.keySet().size() != map2.keySet().size()) {
             return false;
@@ -49,4 +49,20 @@ public class State {
         return true;
     }
 
+    public class Pair{
+    	
+    	public Tipo tipo;
+    	public Object valor;
+    	
+		public Pair(Tipo tipo, Object valor) {
+			this.tipo = tipo;
+			this.valor = valor;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			Pair pair = (Pair) obj;
+			return this.tipo == pair.tipo && this.valor.equals(pair.valor);
+		}
+    }
 }

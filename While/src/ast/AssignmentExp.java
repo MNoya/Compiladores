@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import ast.State.Pair;
+
 public class AssignmentExp extends Exp {
 
 	public final String id;
@@ -50,17 +52,44 @@ public class AssignmentExp extends Exp {
 	}
 
 	public Object evaluate(State state) throws Exception {
+		
 		Object value = expression.evaluate(state);
-		state.set(id, value);
+		if (!state.map.containsKey(id)) {
+			throw new Exception("Variable " + id + " no declarada.");
+		}
+		
+		Pair par = state.map.get(id);
+		Tipo tipo = par.tipo;
+		
+		if ((value instanceof String && tipo == Tipo.LITERAL) || (value instanceof Integer && tipo == Tipo.INTEGER)
+				|| (value instanceof Double && tipo == Tipo.NUMERAL)
+				|| (value instanceof Boolean && tipo == Tipo.TRUTHVALUE)) {
+			par.valor = value;
+		} else {
+			throw new Exception("Type mismatch: esperado " + tipo + " recibido " + value.getClass().getSimpleName());
+		}
+		
 		return value;
 	}
 
 	@Override
-	public Tipo check(CheckState s) throws Exception {
-		Tipo tipoExp = expression.check(s);
+	public Tipo check(CheckState cState) throws Exception {
+		if (!cState.map.containsKey(id)) {
+			throw new Exception("Variable " + id + " no declarada");
+		}
 
-		s.set(id, tipoExp, true);
+		ast.CheckState.Pair par = cState.map.get(id);
+		Tipo tipo = par.tipo;
 		
-		return tipoExp;
+		Object value = expression.check(cState);
+		if ((value instanceof String && tipo == Tipo.LITERAL) || (value instanceof Integer && tipo == Tipo.INTEGER)
+				|| (value instanceof Double && tipo == Tipo.NUMERAL)
+				|| (value instanceof Boolean && tipo == Tipo.TRUTHVALUE)) {
+			par.inicializado = true;
+		} else {
+			throw new Exception("Type mismatch: esperado " + tipo + " recibido " + value.getClass().getSimpleName());
+		}
+		
+		return tipo;
 	}
 }

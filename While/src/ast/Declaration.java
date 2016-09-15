@@ -56,13 +56,13 @@ public class Declaration extends Stmt {
 			if ((value instanceof String && tipo == Tipo.LITERAL) || (value instanceof Integer && tipo == Tipo.INTEGER)
 					|| (value instanceof Double && tipo == Tipo.NUMERAL)
 					|| (value instanceof Boolean && tipo == Tipo.TRUTHVALUE)) {
-				state.set(tipo, id, value);
+				state.set(id, tipo, value);
 			} else {
 				throw new Exception(
 						"Type mismatch: esperado " + tipo + " recibido " + value.getClass().getSimpleName());
 			}
 		} else {
-			state.set(tipo, id, null);
+			state.set(id, tipo, null);
 		}
 		return state;
 	}
@@ -73,11 +73,16 @@ public class Declaration extends Stmt {
 			throw new Exception("Variable " + id + " ya declarada");
 		}
 
+		if(exp == null){
+			cState.set(id, tipo, false);
+			return cState;
+		} 
+		
 		Object value = exp.check(cState);
 		if ((value instanceof String && tipo == Tipo.LITERAL) || (value instanceof Integer && tipo == Tipo.INTEGER)
 				|| (value instanceof Double && tipo == Tipo.NUMERAL)
 				|| (value instanceof Boolean && tipo == Tipo.TRUTHVALUE)) {
-			cState.set(tipo, id);
+			cState.set(id,tipo,true);
 		} else {
 			throw new Exception("Type mismatch: esperado " + tipo + " recibido " + value.getClass().getSimpleName());
 		}
