@@ -59,7 +59,7 @@ public class Declaration extends Stmt {
 				state.set(id, tipo, value);
 			} else {
 				throw new Exception(
-						"Type mismatch: esperado " + tipo + " recibido " + value.getClass().getSimpleName());
+						"Type mismatch: esperado " + tipo + " recibido " + value);
 			}
 		} else {
 			state.set(id, tipo, null);
@@ -78,13 +78,11 @@ public class Declaration extends Stmt {
 			return cState;
 		} 
 		
-		Object value = exp.check(cState);
-		if ((value instanceof String && tipo == Tipo.LITERAL) || (value instanceof Integer && tipo == Tipo.INTEGER)
-				|| (value instanceof Double && tipo == Tipo.NUMERAL)
-				|| (value instanceof Boolean && tipo == Tipo.TRUTHVALUE)) {
+		Tipo value = exp.check(cState);
+		if (value == tipo || (value == Tipo.INTEGER && tipo == Tipo.NUMERAL)){
 			cState.set(id,tipo,true);
 		} else {
-			throw new Exception("Type mismatch: esperado " + tipo + " recibido " + value.getClass().getSimpleName());
+			throw new Exception("Type mismatch: esperado " + tipo + " recibido " + value);
 		}
 		
 		return cState;

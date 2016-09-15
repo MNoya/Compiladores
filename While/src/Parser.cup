@@ -33,6 +33,7 @@ non terminal Exp exp;
 non terminal Tipo type;
 terminal String STR;
 terminal Double NUM;
+terminal Integer INT;
 terminal String ID;
 terminal EXCLAMATION_MARK;
 terminal LEFT_PARENTHESIS;
@@ -113,7 +114,9 @@ stmt ::=
 
 exp ::=
 		NUM:$1 
-		{: RESULT = new Numeral($1); :}	
+		{: RESULT = new Numeral($1); :}
+	|	INT:$1 
+		{: RESULT = new Numeral($1); :}		
 	|   STR:$1 
 		{: RESULT = new Literal($1); :}
 	|	ID:$1 
