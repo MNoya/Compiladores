@@ -14,7 +14,7 @@ import java.io.*;
 %cup
 %implements Tokens
 
-%{:
+%{: 
 	public static List<Symbol> tokens(Reader input) throws IOException {
 		Lexer lexer = new Lexer(input);
 		List<Symbol> result = new ArrayList<Symbol>();
@@ -89,6 +89,16 @@ import java.io.*;
 	{ return new Symbol(LEFT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
 "}"
 	{ return new Symbol(RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
+"bool"
+	{ return new Symbol(TYPE_BOOL, yyline, yycolumn, yytext()); }
+"int"
+	{ return new Symbol(TYPE_INT, yyline, yycolumn, yytext()); }
+"num"
+	{ return new Symbol(TYPE_NUM, yyline, yycolumn, yytext()); }
+"str"
+	{ return new Symbol(TYPE_STR, yyline, yycolumn, yytext()); }
+	
+	
 [0-9]+
 	{ String $1 = yytext(); Double $0 = Double.parseDouble($1);
 	  return new Symbol(NUM, yyline, yycolumn, $0); }

@@ -30,6 +30,7 @@ parser code {:
 
 non terminal Stmt stmt;
 non terminal Exp exp;
+non terminal Tipo type;
 terminal String STR;
 terminal Double NUM;
 terminal String ID;
@@ -59,6 +60,11 @@ terminal LENGTH;
 terminal DEFINED;
 terminal DIVISION;
 terminal DOUBLE_EQUALS_SIGN;
+terminal TYPE_BOOL;
+terminal TYPE_INT;
+terminal TYPE_NUM;
+terminal TYPE_STR;
+
 precedence left EXCLAMATION_MARK;
 precedence left ASTERISK;
 precedence left PLUS_SIGN, HYPHEN_MINUS;
@@ -70,7 +76,25 @@ precedence nonassoc DOUBLE_EQUALS_SIGN;
 
 start with stmt;
 
+type ::= TYPE_BOOL 
+		{: RESULT = Tipo.TRUTHVALUE; :}
+		|
+		TYPE_INT
+		{: RESULT = Tipo.INTEGER; :}
+		|
+		TYPE_NUM
+		{: RESULT = Tipo.NUMERAL; :}
+		|
+		TYPE_STR
+		{: RESULT = Tipo.LITERAL; :}
+		;
 stmt ::=
+		type:$1 ID:$2 SEMICOLON 
+		{: RESULT = new Declaration($1, $2); :}
+	|
+		type:$1 ID:$2 EQUALS_SIGN exp:$3 SEMICOLON 
+		{: RESULT = new Declaration($1, $2, $3); :}
+	|
 		ID:$1 EQUALS_SIGN:$2 exp:$3 SEMICOLON:$4 
 		{: RESULT = new Assignment($1, $3); :}
 	|	SKIP:$1 SEMICOLON:$2 
@@ -103,7 +127,7 @@ exp ::=
 	|	exp:$1 DIVISION:$2 exp:$3 
 		{: RESULT = new Division($1, $3); :}
 	|	LEFT_PARENTHESIS:$1 exp:$2 RIGHT_PARENTHESIS:$3 
-		{: RESULT = $2; :}
+		{: RESULT = $2; :} 
 	|	TRUE:$1 
 		{: RESULT = new TruthValue(true); :}
 	|	FALSE:$1 
