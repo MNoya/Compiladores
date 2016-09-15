@@ -67,6 +67,8 @@ public class CompareLessOrEqual extends Exp {
 				}
 			case "Double":
 				return ((Double) leftValue) <= ((Double) rightValue);
+			case "Integer":
+				return ((Double) leftValue) <= ((Double) rightValue);
 			case "String":
 				return ((String) leftValue).compareTo((String) rightValue);
 			default:

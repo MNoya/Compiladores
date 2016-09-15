@@ -2,12 +2,15 @@ package ast;
 
 import java.util.Random;
 
-/** Representación de constantes numéricas o numerales.
-*/
+/** Representación de floats y enteros **/
 public class Numeral extends Exp {
-	public final Double number;
+	public final Object number;
 
 	public Numeral(Double number) {
+		this.number = number;
+	}
+	
+	public Numeral(Integer number) {
 		this.number = number;
 	}
 
@@ -38,14 +41,16 @@ public class Numeral extends Exp {
 		return new Numeral(number);
 	}
 	
-	public Object evaluate(State state) throws Exception
-	{
+	public Object evaluate(State state) throws Exception {
         return number;
 	}
 
 	@Override
 	public Tipo check(CheckState s) throws Exception {
-		
-		return Tipo.NUMERAL;
+		if (number instanceof Integer){
+			return Tipo.INTEGER;
+		} else {
+			return Tipo.NUMERAL;
+		}
 	}
 }

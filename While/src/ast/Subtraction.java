@@ -55,8 +55,12 @@ public class Subtraction extends Exp {
 		Object leftValue = left.evaluate(state);
 		Object rightValue = right.evaluate(state);
 
-		if (leftValue instanceof Double && rightValue instanceof Double) {
-			return (Double) left.evaluate(state) - (Double) right.evaluate(state);
+		if ((leftValue instanceof Double || leftValue instanceof Integer) && (rightValue instanceof Double || rightValue instanceof Integer)) {
+			if (leftValue instanceof Integer && rightValue instanceof Integer){
+				return (Integer) left.evaluate(state) - (Integer) right.evaluate(state);
+			} else {
+				return (Double) left.evaluate(state) - (Double) right.evaluate(state);
+			}	
 		} else {
 			throw new Exception("Tipos incompatibles: " + leftValue.getClass().getName() + " "
 					+ rightValue.getClass().getName() + "\n");
@@ -68,8 +72,12 @@ public class Subtraction extends Exp {
 		Tipo leftTipo = left.check(s);
 		Tipo rightTipo = right.check(s);
 
-		if (leftTipo == Tipo.NUMERAL && leftTipo == rightTipo) {
-			return leftTipo;
+		if ((leftTipo == Tipo.NUMERAL || leftTipo == Tipo.INTEGER) && (rightTipo == Tipo.NUMERAL || rightTipo == Tipo.INTEGER)) {
+			if (leftTipo == rightTipo){
+				return leftTipo;
+			} else {
+				return Tipo.NUMERAL;
+			}
 		} else {
 			throw new Exception("Type mismatch: " + leftTipo + " vs. " + rightTipo);
 		}

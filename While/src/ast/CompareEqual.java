@@ -49,7 +49,7 @@ public class CompareEqual extends Exp {
 		Object rightValue = right.evaluate(state);
 		
 		if (leftValue.getClass().equals(rightValue.getClass()) &&
-			(leftValue instanceof Boolean || leftValue instanceof Double || leftValue instanceof String)){
+			(leftValue instanceof Boolean || leftValue instanceof Double || leftValue instanceof Integer || leftValue instanceof String)){
 			return leftValue.equals(rightValue);
 		}
 		else
