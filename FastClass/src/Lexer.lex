@@ -40,32 +40,37 @@ import java.io.*;
 %}
 
 %%
+
+"output"
+	{ return new Symbol(OUTPUT, yyline, yycolumn, yytext()); }
+"java"
+	{ return new Symbol(JAVA, yyline, yycolumn, yytext()); }
+"csharp"
+	{ return new Symbol(CSHARP, yyline, yycolumn, yytext()); }
+"php"
+	{ return new Symbol(PHP, yyline, yycolumn, yytext()); }
+"class"
+    { return new Symbol(CLASS, yyline, yycolumn, yytext()); }
 "("
     { return new Symbol(LEFT_PARENTHESIS, yyline, yycolumn, yytext()); }
-")"
-    { return new Symbol(RIGHT_PARENTHESIS, yyline, yycolumn, yytext()); }
-":"
-    { return new Symbol(COLON, yyline, yycolumn, yytext()); }
 ","
     { return new Symbol(COMMA, yyline, yycolumn, yytext()); }
-"{{"
-    { return new Symbol(DOUBLE_LEFT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
-"}}"
-    { return new Symbol(DOUBLE_RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
+")"
+    { return new Symbol(RIGHT_PARENTHESIS, yyline, yycolumn, yytext()); }
+r?w?c?
+	{ return new Symbol(GET_SET_CON, yyline, yycolumn, yytext()); }
+":"
+    { return new Symbol(COLON, yyline, yycolumn, yytext()); }
 "{"
     { return new Symbol(LEFT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
 "}"
     { return new Symbol(RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
-"class"
-    { return new Symbol(CLASS, yyline, yycolumn, yytext()); }
-[rwc]
-	{ return new Symbol(GET_SET_CON, yyline, yycolumn, yytext()); }
-"output"
-	{ return new Symbol(OUTPUT, yyline, yycolumn, yytext()); }
+"{{"
+    { return new Symbol(DOUBLE_LEFT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
+"}}"
+    { return new Symbol(DOUBLE_RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
 [a-zA-Z_][a-zA-Z0-9_]*
-    { String $1 = yytext(); String $0;
-      $0 = $1;
-      return new Symbol(ID, yyline, yycolumn, $0); }
+    { return new Symbol(ID, yyline, yycolumn, yytext()); }
 [ \t\r\n\f\v]+
     { /* Ignore */ }
 \/\*+([^\*]|\*+[^\/])*\*+\/

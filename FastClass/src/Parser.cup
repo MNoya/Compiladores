@@ -28,21 +28,75 @@ parser code {:
 	}
 :}
 
-non terminal Stmt stmt;
-terminal DOUBLE_EQUALS_SIGN;
-precedence nonassoc DOUBLE_EQUALS_SIGN;
+terminal OUTPUT;
+terminal JAVA;
+terminal CSHARP;
+terminal PHP;
+terminal CLASS;
+terminal LEFT_PARENTHESIS;
+terminal COMMA;
+terminal RIGHT_PARENTHESIS;
+terminal COLON;
+terminal LEFT_CURLY_BRACKET;
+terminal RIGHT_CURLY_BRACKET;
+terminal DOUBLE_LEFT_CURLY_BRACKET;
+terminal DOUBLE_RIGHT_CURLY_BRACKET;
 
-LEFT_PARENTHESIS;
-RIGHT_PARENTHESIS;
-COLON;
-COMMA;
-DOUBLE_LEFT_CURLY_BRACKET;
-DOUBLE_RIGHT_CURLY_BRACKET;
-LEFT_CURLY_BRACKET;
-RIGHT_CURLY_BRACKET;
-CLASS;
-GET_SET_CON;
-OUTPUT;
-ID;
+terminal String GET_SET_CON;
+terminal String ID;
 
-start with file;
+non terminal Programa prog;
+non terminal Output output;
+non terminal Clase clase;
+non terminal Parametro param;
+
+
+// precedence nonassoc DOUBLE_EQUALS_SIGN;
+
+start with prog;
+
+prog ::= OUTPUT output:$1 CLASS ID:$2 LEFT_PARENTHESIS RIGHT_PARENTESIS	
+	{ RESULT = new Programa($1, $2); }
+;
+output ::= output:$1 COMMA JAVA
+	{ 
+	  	$1.setJava();
+		RESULT = $1;
+	}
+	|
+	output:$1 COMMA PHP
+	{ 
+	  	$1.setPhp();
+		RESULT = $1;
+	}
+	|
+	output:$1 COMMA CSHARP
+	{ 
+		$1.setCsharp();
+		RESULT = $1;
+	}
+	|
+	JAVA 
+	{ 
+		Output o = new Output(); 
+	  	o.setJava();
+		RESULT = o;
+	}
+	|
+	PHP 
+	{ 
+		Output o = new Output(); 
+	  	o.setPhp();
+		RESULT = o;
+	}
+	|
+	CSHARP 
+	{ 
+		Output o = new Output(); 
+	  	o.setCsharp();
+		RESULT = o;
+	}
+	
+	
+	
+
