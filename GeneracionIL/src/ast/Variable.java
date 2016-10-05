@@ -30,7 +30,7 @@ public class Variable extends AExp {
 	}
 
 	@Override public CompilationContextIL compileIL(CompilationContextIL ctx) {
-		ctx.codeIL.append("ldloc."+ctx.variables.indexOf(id)+"\n");
+		ctx.codeIL.append("ldloc." + ctx.variables.indexOf(id) + "\n");
 		return ctx;
 	}
 

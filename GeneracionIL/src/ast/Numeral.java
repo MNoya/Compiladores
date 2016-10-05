@@ -30,7 +30,7 @@ public class Numeral extends AExp {
 	}
 
 	@Override public CompilationContextIL compileIL(CompilationContextIL ctx) {
-		ctx.codeIL.append("ldc.i4 "+Math.round(number)+"\n");
+		ctx.codeIL.append("ldc.i4 " + Math.round(number) + "\n");
 		return ctx;
 	}
 

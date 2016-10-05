@@ -32,7 +32,10 @@ public class CompareEqual extends BExp {
 	}
 
 	@Override public CompilationContextIL compileIL(CompilationContextIL ctx) {
-		throw new Error("Method compileIL not implemented!");
+        left.compileIL(ctx);
+        right.compileIL(ctx);
+        ctx.codeIL.append("ceq \n");
+        return ctx;
 	}
 
 	@Override public String toString() {

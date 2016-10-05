@@ -33,7 +33,18 @@ public class WhileDo extends Stmt {
 	}
 
 	@Override public CompilationContextIL compileIL(CompilationContextIL ctx) {
-		throw new Error("Method compileIL not implemented!");
+        
+        String jump_cond = ctx.newLabel();
+        String jump_body = ctx.newLabel();
+        
+        ctx.codeIL.append("br.s " + jump_cond + " \n");
+        ctx.codeIL.append(jump_body + ": ");
+        body.compileIL(ctx);
+        ctx.codeIL.append(jump_cond + ": ");
+        condition.compileIL(ctx);
+        ctx.codeIL.append("brtrue.s " + jump_body + "\n");
+        
+        return ctx;
 	}
 
 	@Override public String toString() {

@@ -34,7 +34,19 @@ public class IfThenElse extends Stmt {
 	}
 
 	@Override public CompilationContextIL compileIL(CompilationContextIL ctx) {
-		throw new Error("Method compileIL not implemented!");
+        
+        String jump_s1 = ctx.newLabel();
+        String jump_s2 = ctx.newLabel();
+        
+        condition.compileIL(ctx);
+        ctx.codeIL.append("brfalse.s " + jump_s2 + " \n");
+        thenBody.compileIL(ctx);
+        ctx.codeIL.append("br.s " + jump_s1 + " \n");
+        ctx.codeIL.append(jump_s2 + ": ");
+        elseBody.compileIL(ctx);
+        ctx.codeIL.append(jump_s1 + ": nop \n");
+        
+        return ctx;
 	}
 
 	@Override public String toString() {
