@@ -67,4 +67,12 @@ public class Sequence extends Stmt {
 		}
 		return new Sequence(statements);
 	}
+
+	@Override
+	public Stmt optimize(State state) {
+		for (Stmt s: statements){
+			s.optimize(state);
+		}
+		return this;
+	}
 }

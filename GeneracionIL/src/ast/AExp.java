@@ -25,6 +25,8 @@ public abstract class AExp {
 
 	@Override public abstract boolean equals(Object obj);
 
+	public abstract AExp optimization(State state);
+	
 	public static AExp generate(Random random, int min, int max) {
 		final int TERMINAL_COUNT = 2;
 		final int NONTERMINAL_COUNT = 3;

@@ -77,4 +77,10 @@ public class IfThenElse extends Stmt {
 		elseBody = Stmt.generate(random, min-1, max-1);
 		return new IfThenElse(condition, thenBody, elseBody);
 	}
+
+	@Override
+	public Stmt optimize(State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

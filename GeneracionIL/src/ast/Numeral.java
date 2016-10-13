@@ -56,4 +56,8 @@ public class Numeral extends AExp {
 		number = Math.round(random.nextDouble() * 1000) / 100.0;
 		return new Numeral(number);
 	}
+	
+	public AExp optimization(State state){
+		return this;
+	}
 }

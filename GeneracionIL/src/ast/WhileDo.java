@@ -72,4 +72,10 @@ public class WhileDo extends Stmt {
 		body = Stmt.generate(random, min-1, max-1);
 		return new WhileDo(condition, body);
 	}
+
+	@Override
+	public Stmt optimize(State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

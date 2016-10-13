@@ -63,4 +63,10 @@ public class Subtraction extends AExp {
 		right = AExp.generate(random, min-1, max-1);
 		return new Subtraction(left, right);
 	}
+	
+	public AExp optimization(State state){
+		left.optimization(state);
+		right.optimization(state);
+		return this;
+	}
 }

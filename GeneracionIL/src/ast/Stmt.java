@@ -40,4 +40,6 @@ public abstract class Stmt {
 			default: throw new Error("Unexpected error at Stmt.generate()!");
 		}
 	}
+
+	public abstract Stmt optimize(State state);
 }

@@ -56,4 +56,13 @@ public class Variable extends AExp {
 		id = ""+"abcdefghijklmnopqrstuvwxyz".charAt(random.nextInt(26));
 		return new Variable(id);
 	}
+	
+	public AExp optimization(State state){
+		// Propagation
+		Double value = state.get(id);
+		if (value != null){
+			return new Numeral(value);
+		}
+		return this;
+	}
 }

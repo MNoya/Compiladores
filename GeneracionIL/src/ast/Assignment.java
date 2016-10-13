@@ -62,4 +62,10 @@ public class Assignment extends Stmt {
 		expression = AExp.generate(random, min-1, max-1);
 		return new Assignment(id, expression);
 	}
+
+	@Override
+	public Stmt optimize(State state) {
+		expression.optimization(state);
+		return this;
+	}
 }

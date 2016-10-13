@@ -30,7 +30,7 @@ public class TruthValue extends BExp {
 	}
 
 	@Override public CompilationContextIL compileIL(CompilationContextIL ctx) {
-        ctx.codeIL.append("ldc.i4." + ((value) ? "1" : "0"));
+        ctx.codeIL.append("ldc.i4." + ((value) ? "1" : "0")+"\n");
         return ctx;
 	}
 
