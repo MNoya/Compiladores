@@ -65,8 +65,18 @@ public class Addition extends AExp {
 	}
 	
 	public AExp optimization(State state){
-		left.optimization(state);
-		right.optimization(state);
-		return this;
+		AExp left2 = left.optimization(state);
+		AExp right2 = right.optimization(state);
+		if (left2 instanceof Numeral && right2 instanceof Numeral){
+			return new Numeral(((Numeral) left2).number + ((Numeral) right2).number);
+			
+		}else if(left2 instanceof Numeral && ((Numeral)left2).number == 0){
+			return right2;
+		
+		}else if(right2 instanceof Numeral && ((Numeral)right2).number == 0){
+			return left2;
+		}
+		
+		return new Addition(left2, right2);
 	}
 }

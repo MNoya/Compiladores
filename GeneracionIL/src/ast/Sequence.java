@@ -70,9 +70,13 @@ public class Sequence extends Stmt {
 
 	@Override
 	public Stmt optimize(State state) {
-		for (Stmt s: statements){
-			s.optimize(state);
+		
+//		Sequence seq = new Seq
+				
+		Stmt[] stmts = new Stmt[statements.length];
+		for (int i=0;i<statements.length;i++){
+			stmts[i] = statements[i].optimize(state);
 		}
-		return this;
+		return new Sequence(stmts);
 	}
 }

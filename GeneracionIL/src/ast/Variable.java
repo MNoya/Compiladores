@@ -63,6 +63,6 @@ public class Variable extends AExp {
 		if (value != null){
 			return new Numeral(value);
 		}
-		return this;
+		return new Variable(id);
 	}
 }

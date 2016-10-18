@@ -80,7 +80,17 @@ public class IfThenElse extends Stmt {
 
 	@Override
 	public Stmt optimize(State state) {
-		// TODO Auto-generated method stub
-		return null;
+		BExp condition2 = condition.optimize(state);
+		Stmt thenBody2 = thenBody.optimize(state);
+		Stmt elseBody2 = elseBody.optimize(state);
+		if (condition2 instanceof TruthValue){
+			if (((TruthValue)condition2).value){
+				return thenBody2;
+			}
+			else{
+				return elseBody2;
+			} 
+		}
+		return new IfThenElse(condition2, thenBody2, elseBody2);
 	}
 }

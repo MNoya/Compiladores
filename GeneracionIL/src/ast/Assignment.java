@@ -65,7 +65,10 @@ public class Assignment extends Stmt {
 
 	@Override
 	public Stmt optimize(State state) {
-		expression.optimization(state);
-		return this;
+		AExp exp2 = expression.optimization(state);
+		if (exp2 instanceof Numeral){
+			state.set(id, ((Numeral)exp2).number);
+		}
+		return new Assignment(id, exp2);
 	}
 }
