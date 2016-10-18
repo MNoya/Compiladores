@@ -63,4 +63,26 @@ public class Conjunction extends BExp {
 		right = BExp.generate(random, min-1, max-1);
 		return new Conjunction(left, right);
 	}
+
+    @Override
+    public BExp optimization(State state) {
+        
+        BExp left2 = left.optimization(state);
+        BExp right2 = right.optimization(state);
+
+        if (left2 instanceof TruthValue) {
+            if (!((TruthValue) left2).value){
+                return new TruthValue(false);
+            }
+            return right2;
+        } else if (right2 instanceof TruthValue) {
+            if (!((TruthValue) right2).value){
+                return new TruthValue(false);
+            }
+            return left2;
+        }
+        
+        return new Conjunction(left2, right2);
+    }
+    
 }

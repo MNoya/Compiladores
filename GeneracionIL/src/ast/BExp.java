@@ -25,6 +25,8 @@ public abstract class BExp {
 
 	@Override public abstract boolean equals(Object obj);
 
+	public abstract BExp optimization(State state);
+    
 	public static BExp generate(Random random, int min, int max) {
 		final int TERMINAL_COUNT = 1;
 		final int NONTERMINAL_COUNT = 4;

@@ -75,7 +75,10 @@ public class WhileDo extends Stmt {
 
 	@Override
 	public Stmt optimize(State state) {
-		// TODO Auto-generated method stub
-		return null;
+		
+        BExp cond2 = condition.optimization(state);
+        Stmt body2 = body.optimize(state);
+        
+		return new WhileDo(condition, body);
 	}
 }
