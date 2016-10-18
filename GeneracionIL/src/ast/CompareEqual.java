@@ -63,4 +63,20 @@ public class CompareEqual extends BExp {
 		right = AExp.generate(random, min-1, max-1);
 		return new CompareEqual(left, right);
 	}
+
+    @Override
+    public BExp optimization(State state) {
+        AExp left2 = left.optimization(state);
+        AExp right2 = right.optimization(state);
+
+        if (left2 instanceof Numeral && right2 instanceof Numeral) {
+            if (((Numeral) left2).number.equals(((Numeral) right2).number)) {
+                return new TruthValue(true);
+            } else {
+                return new TruthValue(false);
+            }
+        }
+        
+        return new CompareEqual(left2, right2);
+    }
 }

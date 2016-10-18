@@ -65,4 +65,20 @@ public class CompareLessOrEqual extends BExp {
 		right = AExp.generate(random, min-1, max-1);
 		return new CompareLessOrEqual(left, right);
 	}
+
+    @Override
+    public BExp optimization(State state) {
+        AExp left2 = left.optimization(state);
+        AExp right2 = right.optimization(state);
+
+        if (left2 instanceof Numeral && right2 instanceof Numeral) {
+            if (((Numeral) left2).number.compareTo(((Numeral) right2).number) <= 0) {
+                return new TruthValue(true);
+            } else {
+                return new TruthValue(false);
+            }
+        }
+
+        return new CompareLessOrEqual(left2, right2);
+    }
 }

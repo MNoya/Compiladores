@@ -57,6 +57,7 @@ public class Variable extends AExp {
 		return new Variable(id);
 	}
 	
+    @Override
 	public AExp optimization(State state){
 		// Propagation
 		Double value = state.get(id);

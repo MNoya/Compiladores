@@ -58,4 +58,19 @@ public class Negation extends BExp {
 		condition = BExp.generate(random, min-1, max-1);
 		return new Negation(condition);
 	}
+
+    @Override
+    public BExp optimization(State state) {
+        
+        BExp cond2 = condition.optimization(state);
+        if (cond2 instanceof TruthValue){
+            TruthValue tv = (TruthValue)cond2;
+            if (tv.value){
+                return new TruthValue(false);
+            }
+            return new TruthValue(true);
+        }
+        return new Negation(cond2);
+    }
+    
 }
