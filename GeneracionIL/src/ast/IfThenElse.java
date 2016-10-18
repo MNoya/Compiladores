@@ -80,7 +80,7 @@ public class IfThenElse extends Stmt {
 
 	@Override
 	public Stmt optimize(State state) {
-		BExp condition2 = condition.optimize(state);
+		BExp condition2 = condition.optimization(state);
 		Stmt thenBody2 = thenBody.optimize(state);
 		Stmt elseBody2 = elseBody.optimize(state);
 		if (condition2 instanceof TruthValue){
