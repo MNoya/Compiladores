@@ -7,25 +7,25 @@ import java_cup.runtime.Symbol;
 
 parser code {:
 
-	public void syntax_error(Symbol currentToken) {
-		report_error("Syntax error at [" + (currentToken.left+1) +"," + (currentToken.right+1) +"]!", null);
-	}
+    public void syntax_error(Symbol currentToken) {
+        report_error("Syntax error at [" + (currentToken.left+1) +"," + (currentToken.right+1) +"]!", null);
+    }
 
-	public static Symbol parse(Reader input) throws Exception {
-		return (new Parser(new Lexer(input))).parse();
-	}
+    public static Symbol parse(Reader input) throws Exception {
+        return (new Parser(new Lexer(input))).parse();
+    }
 
-	public static Symbol parse(String input) throws Exception {
-		return parse(new StringReader(input));
-	}
+    public static Symbol parse(String input) throws Exception {
+        return parse(new StringReader(input));
+    }
 
-	public static void main(String[] args) throws Exception {
-		if (args.length < 1) {
-			System.out.println(parse(new InputStreamReader(System.in, "UTF8")).value);
-		} else for (int i = 0; i < args.length; ++i) {
-			System.out.println(parse(new InputStreamReader(new FileInputStream(args[i]), "UTF8")).value);
-		}
-	}
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            System.out.println(parse(new InputStreamReader(System.in, "UTF8")).value);
+        } else for (int i = 0; i < args.length; ++i) {
+            System.out.println(parse(new InputStreamReader(new FileInputStream(args[i]), "UTF8")).value);
+        }
+    }
 :}
 
 terminal OUTPUT;
@@ -50,53 +50,134 @@ non terminal Output output;
 non terminal Clase clase;
 non terminal Parametro param;
 
+non terminal List<Parametro> repeat$param;
+non terminal List<Clase> repeat$clase;
+non terminal List<ID> repeat$id;
 
-// precedence nonassoc DOUBLE_EQUALS_SIGN;
+precedence nonassoc LEFT_CURLY_BRACKET, RIGHT_CURLY_BRACKET;
 
 start with prog;
 
-prog ::= OUTPUT output:$1 CLASS ID:$2 LEFT_PARENTHESIS RIGHT_PARENTESIS	
-	{ RESULT = new Programa($1, $2); }
+prog ::= 
+        OUTPUT output:$1 repeat$clase:$2
+        {: RESULT = new Programa($1, $2); :}
 ;
-output ::= output:$1 COMMA JAVA
-	{ 
-	  	$1.setJava();
-		RESULT = $1;
-	}
-	|
-	output:$1 COMMA PHP
-	{ 
-	  	$1.setPhp();
-		RESULT = $1;
-	}
-	|
-	output:$1 COMMA CSHARP
-	{ 
-		$1.setCsharp();
-		RESULT = $1;
-	}
-	|
-	JAVA 
-	{ 
-		Output o = new Output(); 
-	  	o.setJava();
-		RESULT = o;
-	}
-	|
-	PHP 
-	{ 
-		Output o = new Output(); 
-	  	o.setPhp();
-		RESULT = o;
-	}
-	|
-	CSHARP 
-	{ 
-		Output o = new Output(); 
-	  	o.setCsharp();
-		RESULT = o;
-	}
-	
-	
-	
 
+output ::= 
+        output:$1 COMMA JAVA
+        {: 
+            $1.setJava();
+            RESULT = $1;
+        :}
+    |   output:$1 COMMA PHP
+        {: 
+            $1.setPhp();
+            RESULT = $1;
+        }
+    |   output:$1 COMMA CSHARP
+        {: 
+            $1.setCsharp();
+            RESULT = $1;
+        :}
+    |   JAVA 
+        {: 
+            Output o = new Output(); 
+            o.setJava();
+            RESULT = o;
+        :}
+    |   PHP 
+        {: 
+            Output o = new Output(); 
+            o.setPhp();
+            RESULT = o;
+        :}
+    |   CSHARP 
+        {: 
+            Output o = new Output(); 
+            o.setCsharp();
+            RESULT = o;
+        :}
+;
+
+clase ::=
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS
+        {:
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]))
+        :}
+        
+    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET repeat$clase:$3 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Clase[$3.size()]))
+        :}
+
+    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON LEFT_CURLY_BRACKET repeat$clase:$4 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3,, $4.toArray(new Clase[$4.size()]))
+        :}
+
+    |  	CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Interfaz[$3.size()]), $4.toArray(new Clase[$4.size()]))
+        :}
+
+    |   //class O(<Parametro>) Padre : Interfaces {}
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3, $4.toArray(new String[$4.size()]), $5.toArray(new Clase[$5.size()]))
+        :}
+;
+
+repeat$clase ::=
+
+        {: 
+            List<Clase> $0;
+            $0 = new ArrayList<Clase>();
+            RESULT = $0; 
+        :}
+    |   repeat$clase:$1 clase:$2 
+        {:
+            List<Clase> $0;
+            $1.add($2);
+            $0 = $1;
+            RESULT = $0;
+        :}
+;
+
+repeat$id ::=
+
+        {: 
+            List<String> $0;
+            $0 = new ArrayList<String>();
+            RESULT = $0; 
+        :}
+    |   repeat$id:$1 ID:$2 
+        {:
+            List<String> $0;
+            $1.add($2);
+            $0 = $1;
+            RESULT = $0;
+        :}
+;
+
+param ::= 
+        ID:$1 GET_SET_CON:$2 ID:$3
+        {: RESULT = new Parametro($1, $2, $3); :}
+    |   ID:$1 ID:$2
+        {: RESULT = new Parametro($1, $2); :}
+;
+
+repeat$param ::=
+
+        {: 
+            List<Parametro> $0;
+            $0 = new ArrayList<Parametro>();
+            RESULT = $0; 
+        :}
+    |   repeat$param:$1 param:$2 
+        {:
+            List<Parametro> $0;
+            $1.add($2);
+            $0 = $1;
+            RESULT = $0;
+        :}
+;
