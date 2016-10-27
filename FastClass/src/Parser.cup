@@ -102,28 +102,28 @@ output ::=
 clase ::=
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]))
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]));
         :}
         
     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET repeat$clase:$3 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Clase[$3.size()]))
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Clase[$3.size()]));
         :}
 
     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON LEFT_CURLY_BRACKET repeat$clase:$4 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3,, $4.toArray(new Clase[$4.size()]))
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3, $4.toArray(new Clase[$4.size()]));
         :}
 
-    |  	CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
+    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Interfaz[$3.size()]), $4.toArray(new Clase[$4.size()]))
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Interfaz[$3.size()]), $4, $5.toArray(new Clase[$5.size()]));
         :}
 
     |   //class O(<Parametro>) Padre : Interfaces {}
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3, $4.toArray(new String[$4.size()]), $5.toArray(new Clase[$5.size()]))
+            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3, $4.toArray(new String[$4.size()]), $5.toArray(new Clase[$5.size()]));
         :}
 ;
 
