@@ -2,9 +2,9 @@ package ast;
 
 public class Output {
     
-    public Boolean java;
-    public Boolean csharp;
-    public Boolean php;
+    boolean java;
+    boolean csharp;
+    boolean php;
 
     public Output() {
         java = false;

@@ -21,28 +21,8 @@ public class CompCont {
      * @param prog Programa a compilar
      * @return Código generado
      */
-    public static String compile(Programa prog) {
-        
-        String output = "";
-        
-        if(prog.output.csharp){
-            CompCont ctx = new CompCont(prog);
-            prog.compileCsharp(ctx);
-            output += ctx.code.toString()+"\n\n";
-        }
-        
-        if(prog.output.java){
-            CompCont ctx = new CompCont(prog);
-            prog.compileJava(ctx);
-            output += ctx.code.toString()+"\n\n";
-        }
-        
-        if(prog.output.php){
-            CompCont ctx = new CompCont(prog);
-            prog.compilePhp(ctx);
-            output += ctx.code.toString()+"\n\n";
-        }
-        
-        return output;
-    }
+//    public static String compile(Programa prog) {
+//        
+//        
+//    }
 }

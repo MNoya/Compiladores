@@ -4,8 +4,8 @@ import behavior.CompCont;
 
 public interface Nodo {
     
-    public void compileCsharp(CompCont ctx);
-    public void compileJava(CompCont ctx);
-    public void compilePhp(CompCont ctx);
+    public CompCont compileCsharp(CompCont ctx);
+    public CompCont compileJava(CompCont ctx);
+    public CompCont compilePhp(CompCont ctx);
     
 }
