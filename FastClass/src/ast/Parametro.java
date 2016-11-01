@@ -57,17 +57,17 @@ public class Parametro implements Nodo {
 
     @Override
     public CompCont compilePhp(CompCont ctx) {
-        clase.listaParametros += "public $" + nombre + ";\n";
+        clase.listaParametros += "\tpublic $" + nombre + ";\n";
 
         if (c) {
             clase.paramsConstructor += "$" + nombre + ", ";
-            clase.initConstructor += "        $this->" + nombre + " = $" + nombre + ";\n";
+            clase.initConstructor += "\t\t$this->" + nombre + " = $" + nombre + ";\n";
         }
 
         String camel = (nombre.charAt(0) + "").toUpperCase() + nombre.substring(1);
         
-        clase.gettersSetters += (r) ? "public function get" + camel + "(){\n return $this->" + nombre + ";\n}\n\n" : "";
-        clase.gettersSetters += (w) ? "public function set" + camel + "($" + nombre + "){\n $this->" + nombre + " = $" + nombre + ";\n}\n\n" : "";
+        clase.gettersSetters += (r) ? "\tpublic function get" + camel + "(){\n\t\treturn $this->" + nombre + ";\n\t}\n\n" : "";
+        clase.gettersSetters += (w) ? "\tpublic function set" + camel + "($" + nombre + "){\n\t\t$this->" + nombre + " = $" + nombre + ";\n\t}\n\n" : "";
 
         return ctx;
     }

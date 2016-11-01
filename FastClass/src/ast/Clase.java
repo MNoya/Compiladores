@@ -1,6 +1,8 @@
 package ast;
 
 import behavior.CompCont;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Clase implements Nodo {
@@ -28,12 +30,58 @@ public class Clase implements Nodo {
 
     @Override
     public CompCont compileCsharp(CompCont ctx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ctx.code.append("public class " + nombre);
+
+        if (padre != null || interfaces != null) {
+            ctx.code.append(" : ");
+        }
+
+        if (interfaces != null && interfaces.size() > 0) {
+            List<String> padres = new ArrayList(interfaces);
+            if (padre != null) {
+                padres.add(0, padre);
+            }
+            ctx.code.append(String.join(", ", padres));
+        } else if (padre != null) {
+            ctx.code.append(padre);
+        }
+
+        ctx.code.append(" { \n\n");
+
+        listaParametros = "";
+        paramsConstructor = "";
+        initConstructor = ") {\n";
+        gettersSetters = "\t}\n\n";
+
+        if (parametros != null) {
+            for (Parametro p : parametros) {
+                p.registrarClase(this);
+                p.compileJava(ctx);
+            }
+        }
+        if (paramsConstructor.length() > 0) {
+            paramsConstructor = paramsConstructor.substring(0, paramsConstructor.length() - 2);
+        }
+        ctx.code.append(listaParametros + "\n\tpublic " + nombre + "(" + paramsConstructor + initConstructor + gettersSetters);
+
+        if (fuente != null && fuente.length() > 0) {
+            ctx.code.append("\t//Codigo fuente original\n");
+            ctx.code.append(fuente);
+        }
+
+        if (subclases != null) {
+            for (Clase sub : subclases) {
+                sub.compileJava(ctx);
+            }
+        }
+
+        ctx.code.append("}");
+
+        return ctx;
     }
 
     @Override
     public CompCont compileJava(CompCont ctx) {
-
         ctx.code.append("public class " + nombre);
 
         if (padre != null) {
@@ -61,8 +109,11 @@ public class Clase implements Nodo {
             paramsConstructor = paramsConstructor.substring(0, paramsConstructor.length() - 2);
         }
         ctx.code.append(listaParametros + "\n\tpublic " + nombre + "(" + paramsConstructor + initConstructor + gettersSetters);
-        ctx.code.append("\t//Codigo fuente original\n");
-        ctx.code.append(fuente);
+
+        if (fuente != null && fuente.length() > 0) {
+            ctx.code.append("\t//Codigo fuente original\n");
+            ctx.code.append(fuente);
+        }
 
         if (subclases != null) {
             for (Clase sub : subclases) {
@@ -77,6 +128,9 @@ public class Clase implements Nodo {
 
     @Override
     public CompCont compilePhp(CompCont ctx) {
+
+        ctx.code.append("<?php \n\n");
+
         ctx.code.append("class " + nombre);
 
         if (padre != null) {
@@ -90,7 +144,7 @@ public class Clase implements Nodo {
         ctx.code.append(" { \n\n");
 
         listaParametros = "";
-        paramsConstructor = "\n\npublic __construct(";
+        paramsConstructor = "";
         initConstructor = ") {\n";
         gettersSetters = "}\n\n";
 
@@ -100,17 +154,24 @@ public class Clase implements Nodo {
                 p.compilePhp(ctx);
             }
         }
-        paramsConstructor = paramsConstructor.substring(0, paramsConstructor.length() - 2);
+        if (paramsConstructor.length() > 0) {
+            paramsConstructor = paramsConstructor.substring(0, paramsConstructor.length() - 2);
+        }
 
-        String subc = "";
+        ctx.code.append(listaParametros + "\n\t public __construct(" + paramsConstructor + initConstructor + gettersSetters);
+
+        if (fuente != null && fuente.length() > 0) {
+            ctx.code.append("\t//Codigo fuente original\n");
+            ctx.code.append(fuente);
+        }
+
         if (subclases != null) {
-
             for (Clase sub : subclases) {
                 sub.compilePhp(ctx);
             }
         }
 
-        ctx.code.append(listaParametros + paramsConstructor + initConstructor + gettersSetters + "}");
+        ctx.code.append("}");
 
         return ctx;
     }

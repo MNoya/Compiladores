@@ -15,14 +15,4 @@ public class CompCont {
     public CompCont(Collection<String> variables) {
         this.variables.addAll(variables);
     }
-    
-    /**
-     * Este método se utiliza para generar el código y obtener como un String
-     * @param prog Programa a compilar
-     * @return Código generado
-     */
-//    public static String compile(Programa prog) {
-//        
-//        
-//    }
 }

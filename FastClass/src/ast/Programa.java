@@ -1,5 +1,6 @@
 package ast;
 
+import aux.Archivo;
 import behavior.CompCont;
 import java.util.List;
 
@@ -17,29 +18,26 @@ public class Programa {
         String salida = "";
 
         if (output.csharp) {
-            CompCont ctx = new CompCont(this);
             for (Clase clase : clases) {
+                CompCont ctx = new CompCont(this);
                 clase.compileCsharp(ctx);
+                Archivo.guardar("csharp/" + clase.nombre + ".cs", ctx.code.toString());
             }
-            salida += ctx.code.toString() + "\n\n";
         }
-
         if (output.java) {
-            CompCont ctx = new CompCont(this);
             for (Clase clase : clases) {
+                CompCont ctx = new CompCont(this);
                 clase.compileJava(ctx);
+                Archivo.guardar("java/" + clase.nombre + ".java", ctx.code.toString());
             }
-            salida += ctx.code.toString() + "\n\n";
         }
-
         if (output.php) {
-            CompCont ctx = new CompCont(this);
             for (Clase clase : clases) {
+                CompCont ctx = new CompCont(this);
                 clase.compilePhp(ctx);
+                Archivo.guardar("php/" + clase.nombre + ".php", ctx.code.toString());
             }
-            salida += ctx.code.toString() + "\n\n";
         }
-
         return salida;
     }
 }
