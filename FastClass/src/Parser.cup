@@ -102,29 +102,95 @@ output ::=
 clase ::=
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]));
+            RESULT = new Clase($1, $2,null,null,null,null);
+        :}
+       
+    | 
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3
+        {:
+            RESULT = new Clase($1, $2,$3,null,null,null);
         :}
         
-    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET repeat$clase:$3 RIGHT_CURLY_BRACKET
+    | 
+         
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Clase[$3.size()]));
+            RESULT = new Clase($1, $2,null,$3,null,null);
         :}
+     | 
+         
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS LEFT_CURLY_BRACKET String:$3 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2,null,null,$3,null);
+        :}
+        
+      |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET repeat$clase:$3 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2,null,null,null $3);
+        :}
+
+      |   
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET String:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2, $3, $4,$5, null);
+        :}   
+    
+     |   
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 
+        {:
+            RESULT = new Clase($1, $2, $3, $4,null,null);
+        :} 
+        
+      |   
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 LEFT_CURLY_BRACKET String:$4 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2, $3,null,$4,null);
+        :}   
+       
+    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 LEFT_CURLY_BRACKET String:$4 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2,null, $3, $4, null);
+        :}  
+       
+     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET String:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2, null,null,$4, $5);
+        :} 
+      |   
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3  LEFT_CURLY_BRACKET String:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2, $3, null,$4, $5);
+        :}
+                
 
     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON LEFT_CURLY_BRACKET repeat$clase:$4 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3, $4.toArray(new Clase[$4.size()]));
+            RESULT = new Clase($1, $2, $3,null,null, $4);
         :}
 
-    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
+    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3.toArray(new Interfaz[$3.size()]), $4, $5.toArray(new Clase[$5.size()]));
+            RESULT = new Clase($1, $2,null, $3, null, $5);
         :}
 
-    |   //class O(<Parametro>) Padre : Interfaces {}
+    |   
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2.toArray(new Parametro[$2.size()]), $3, $4.toArray(new String[$4.size()]), $5.toArray(new Clase[$5.size()]));
+            RESULT = new Clase($1, $2, $3, $4,null, $5);
         :}
+      |   
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET String:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2, $3, $4,$6, $5);
+        :}
+        
+      |   
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  COLON repeat$id:$4 LEFT_CURLY_BRACKET String:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        {:
+            RESULT = new Clase($1, $2,null, $4,$6, $5);
+        :}
+        
+    
 ;
 
 repeat$clase ::=
@@ -163,7 +229,7 @@ param ::=
         ID:$1 GET_SET_CON:$2 ID:$3
         {: RESULT = new Parametro($1, $2, $3); :}
     |   ID:$1 ID:$2
-        {: RESULT = new Parametro($1, $2); :}
+        {: RESULT = new Parametro($1,"", $2); :}
 ;
 
 repeat$param ::=
