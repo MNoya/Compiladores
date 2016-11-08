@@ -12,9 +12,19 @@ public class Parametro implements Nodo {
 
     private Clase clase;
 
-    public Parametro(String tipo, String nombre) {
+    public Parametro(String tipo, String rwc, String nombre) {
         this.tipo = tipo;
         this.nombre = nombre;
+        
+        if (rwc.indexOf("r") != 0) {
+        	this.r = true;
+        }
+        if (rwc.indexOf("w") != 0) {
+        	this.w = true;
+        }
+        if (rwc.indexOf("c") != 0) {
+        	this.c = true;
+        }
     }
 
     public void setR() {
