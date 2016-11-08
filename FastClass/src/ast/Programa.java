@@ -1,6 +1,6 @@
 package ast;
 
-import aux.Archivo;
+import extras.Archivo;
 import behavior.CompCont;
 import java.util.List;
 
