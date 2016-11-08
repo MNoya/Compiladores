@@ -35,11 +35,12 @@ public class Parametro implements Nodo {
 
     @Override
     public CompCont compileCsharp(CompCont ctx) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.compileJava(ctx);
     }
 
     @Override
     public CompCont compileJava(CompCont ctx) {
+        clase.indentar(ctx);
         clase.listaParametros += "\t" + tipo + " " + nombre + ";\n";
 
         if (c) {
@@ -57,6 +58,7 @@ public class Parametro implements Nodo {
 
     @Override
     public CompCont compilePhp(CompCont ctx) {
+        clase.indentar(ctx);
         clase.listaParametros += "\tpublic $" + nombre + ";\n";
 
         if (c) {
