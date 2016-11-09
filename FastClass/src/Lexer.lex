@@ -65,10 +65,8 @@ r?w?c?
     { return new Symbol(LEFT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
 "}"
     { return new Symbol(RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
-"{{"
-    { return new Symbol(DOUBLE_LEFT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
-"}}"
-    { return new Symbol(DOUBLE_RIGHT_CURLY_BRACKET, yyline, yycolumn, yytext()); }
+```([^`]|`)*```
+	{ return new Symbol(SOURCE_CODE, yyline, yycolumn, yytext()); }
 [a-zA-Z_][a-zA-Z0-9_]*
     { return new Symbol(ID, yyline, yycolumn, yytext()); }
 [ \t\r\n\f\v]+
