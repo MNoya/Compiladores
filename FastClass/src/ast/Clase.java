@@ -29,6 +29,16 @@ public class Clase implements Nodo {
         this.interna = interna;
     }
     
+    public Clase(String nombre, List<Parametro> parametros, String padre, List<String> interfaces, String fuente, List<Clase> subclases) {
+        this.nombre = nombre;
+        this.parametros = parametros;
+        this.padre = padre;
+        this.interfaces = interfaces;
+        this.fuente = fuente;
+        this.subclases = subclases;
+        this.interna = null;
+    }
+    
     @Override
     public CompCont compileCsharp(CompCont ctx) {
         

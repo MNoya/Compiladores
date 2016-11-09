@@ -1,6 +1,6 @@
 package parser;
 
-//import ast.*;
+import ast.*;
 import java.io.*;
 import java.util.*;
 import java_cup.runtime.Symbol;
@@ -39,11 +39,10 @@ terminal RIGHT_PARENTHESIS;
 terminal COLON;
 terminal LEFT_CURLY_BRACKET;
 terminal RIGHT_CURLY_BRACKET;
-terminal DOUBLE_LEFT_CURLY_BRACKET;
-terminal DOUBLE_RIGHT_CURLY_BRACKET;
 
 terminal String GET_SET_CON;
 terminal String ID;
+terminal String SOURCE_CODE;
 
 non terminal Programa prog;
 non terminal Output output;
@@ -52,7 +51,7 @@ non terminal Parametro param;
 
 non terminal List<Parametro> repeat$param;
 non terminal List<Clase> repeat$clase;
-non terminal List<ID> repeat$id;
+non terminal List<String> repeat$id;
 
 precedence nonassoc LEFT_CURLY_BRACKET, RIGHT_CURLY_BRACKET;
 
@@ -73,7 +72,7 @@ output ::=
         {: 
             $1.setPhp();
             RESULT = $1;
-        }
+        :}
     |   output:$1 COMMA CSHARP
         {: 
             $1.setCsharp();
@@ -119,45 +118,45 @@ clase ::=
         :}
      | 
          
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS LEFT_CURLY_BRACKET String:$3 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS LEFT_CURLY_BRACKET SOURCE_CODE:$3 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2,null,null,$3,null);
         :}
         
       |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET repeat$clase:$3 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2,null,null,null $3);
+            RESULT = new Clase($1, $2,null,null,null,$3);
         :}
 
       |   
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET String:$5 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET SOURCE_CODE:$5 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2, $3, $4,$5, null);
+            RESULT = new Clase($1, $2, $3, $4, $5, null);
         :}   
     
      |   
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 
         {:
-            RESULT = new Clase($1, $2, $3, $4,null,null);
+            RESULT = new Clase($1, $2, $3, $4, null, null);
         :} 
         
       |   
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 LEFT_CURLY_BRACKET String:$4 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 LEFT_CURLY_BRACKET SOURCE_CODE:$4 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2, $3,null,$4,null);
         :}   
        
-    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 LEFT_CURLY_BRACKET String:$4 RIGHT_CURLY_BRACKET
+    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 LEFT_CURLY_BRACKET SOURCE_CODE:$4 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2,null, $3, $4, null);
         :}  
        
-     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET String:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
+     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET SOURCE_CODE:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2, null,null,$4, $5);
         :} 
       |   
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3  LEFT_CURLY_BRACKET String:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3  LEFT_CURLY_BRACKET SOURCE_CODE:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2, $3, null,$4, $5);
         :}
@@ -179,13 +178,13 @@ clase ::=
             RESULT = new Clase($1, $2, $3, $4,null, $5);
         :}
       |   
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET String:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 COLON repeat$id:$4 LEFT_CURLY_BRACKET SOURCE_CODE:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
-            RESULT = new Clase($1, $2, $3, $4,$6, $5);
+            RESULT = new Clase($1, $2, $3, $4, $6, $5);
         :}
         
       |   
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  COLON repeat$id:$4 LEFT_CURLY_BRACKET String:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  COLON repeat$id:$4 LEFT_CURLY_BRACKET SOURCE_CODE:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2,null, $4,$6, $5);
         :}
@@ -215,6 +214,7 @@ repeat$id ::=
             List<String> $0;
             $0 = new ArrayList<String>();
             RESULT = $0; 
+            
         :}
     |   repeat$id:$1 ID:$2 
         {:
