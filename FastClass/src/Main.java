@@ -1,26 +1,24 @@
 import java.io.*;
-//import ast.*;
+import java.util.Scanner;
+
+import ast.Programa;
 import parser.*;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		//State s = new State();
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			System.out.print("> ");
-			for (String line; (line = in.readLine()) != null ;) {
-				line = line.trim();
-				try {
-					if (line.length() > 0) {
-						/*Stmt prog = (Stmt)(Parser.parse(line).value);
-						s = prog.evaluate(s);
-						
-						System.out.print("\t"+ prog +"\n> ");
-						System.out.print("\t"+ s +"\n> ");*/
-					}
-				} catch (Exception err) {
-					System.err.print(err);
-					err.printStackTrace();
-				}
-			}
+		System.out.println("Loading test cases...");
+		
+		String input = new Scanner(new File("entrada/test1.txt")).useDelimiter("\\Z").next();
+		//System.out.println(content);
+		
+        try {
+            Programa prog = (Programa) Parser.parse(input).value;
+            prog.compile();           
+            System.out.println("Finished program.");
+        } catch (Exception err) {
+            System.err.print(err);
+            err.printStackTrace();
+        }
+	
 	}
 }
