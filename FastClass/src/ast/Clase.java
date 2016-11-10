@@ -12,23 +12,13 @@ public class Clase implements Nodo {
     List<String> interfaces;
     String fuente;
     List<Clase> subclases;
-    Boolean interna;
+    Integer nivel;
     
     String listaParametros;
     String paramsConstructor;
     String initConstructor;
     String gettersSetters;
-    
-    public Clase(String nombre, List<Parametro> parametros, String padre, List<String> interfaces, String fuente, List<Clase> subclases, Boolean interna) {
-        this.nombre = nombre;
-        this.parametros = parametros;
-        this.padre = padre;
-        this.interfaces = interfaces;
-        this.fuente = fuente;
-        this.subclases = subclases;
-        this.interna = interna;
-    }
-    
+        
     public Clase(String nombre, List<Parametro> parametros, String padre, List<String> interfaces, String fuente, List<Clase> subclases) {
         this.nombre = nombre;
         this.parametros = parametros;
@@ -36,7 +26,11 @@ public class Clase implements Nodo {
         this.interfaces = interfaces;
         this.fuente = fuente;
         this.subclases = subclases;
-        this.interna = null;
+        this.nivel = 0;
+    }
+    
+    public void setNivel(int nivel){
+        this.nivel = nivel;
     }
     
     @Override
@@ -59,12 +53,12 @@ public class Clase implements Nodo {
             ctx.code.append(padre);
         }
         
-        ctx.code.append(" { \n\n");
+        ctx.code.append(" { \n");
         
         listaParametros = "";
         paramsConstructor = "";
         initConstructor = ") {\n";
-        gettersSetters = "\t}\n\n";
+        gettersSetters = "\t}\n";
         
         if (parametros != null) {
             for (Parametro p : parametros) {
@@ -95,7 +89,7 @@ public class Clase implements Nodo {
         
         ctx.code.append("\n");
         this.indentar(ctx);
-        ctx.code.append("}\n\n");
+        ctx.code.append("}\n");
         
         return ctx;
     }
@@ -114,12 +108,12 @@ public class Clase implements Nodo {
             ctx.code.append(" implements " + String.join(", ", interfaces));
         }
         
-        ctx.code.append(" { \n\n");
+        ctx.code.append(" { \n");
         
         listaParametros = "";
         paramsConstructor = "";
         initConstructor = ") {\n";
-        gettersSetters = "\t}\n\n";
+        gettersSetters = "\t}\n";
         
         if (parametros != null) {
             for (Parametro p : parametros) {
@@ -150,17 +144,18 @@ public class Clase implements Nodo {
         
         ctx.code.append("\n");
         this.indentar(ctx);
-        ctx.code.append("}\n\n");
+        ctx.code.append("}\n");
         
         return ctx;
     }
     
     @Override
     public CompCont compilePhp(CompCont ctx) {
-        
-        if (this.interna != null && !this.interna) {
-            ctx.code.append("<?php \n\n");
-        }
+        if (this.nivel == 0) {
+            ctx.code.append("<?php \n");
+        } else {
+            ctx.code.append("\n");
+        }            
         
         this.indentar(ctx);
         ctx.code.append("class " + nombre);
@@ -173,12 +168,12 @@ public class Clase implements Nodo {
             ctx.code.append(" implements " + String.join(", ", interfaces));
         }
         
-        ctx.code.append(" { \n\n");
+        ctx.code.append(" { \n");
         
         listaParametros = "";
         paramsConstructor = "";
         initConstructor = ") {\n";
-        gettersSetters = "\t}\n\n";
+        gettersSetters = "\t}\n";
         
         if (parametros != null) {
             for (Parametro p : parametros) {
@@ -204,20 +199,33 @@ public class Clase implements Nodo {
         
         if (subclases != null) {
             for (Clase sub : subclases) {
+                sub.setNivel(this.nivel+1);
                 sub.compilePhp(ctx);
             }
         }
         
         ctx.code.append("\n");
         this.indentar(ctx);
-        ctx.code.append("}\n\n");
+        ctx.code.append("}");
+        
+        if (this.nivel == 0) {
+            ctx.code.append("\n?>");
+        }
         
         return ctx;
     }
     
     public void indentar(CompCont ctx) {
-        if (this.interna != null && this.interna) {
+        for (int i = 0; i < this.nivel; i++) {
             ctx.code.append("\t");
         }
+    }
+
+    public String getIndent() {
+        String s = "";
+        for (int i = 0; i < this.nivel; i++) {
+            s+="\t";
+        }
+        return s;
     }
 }

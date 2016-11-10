@@ -184,7 +184,7 @@ clase ::=
         :}
         
       |   
-        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  COLON repeat$id:$4 LEFT_CURLY_BRACKET SOURCE_CODE:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
+        CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$4 LEFT_CURLY_BRACKET SOURCE_CODE:$6 repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2,null, $4,$6, $5);
         :}

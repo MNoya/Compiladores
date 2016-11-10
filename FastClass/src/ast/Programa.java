@@ -14,9 +14,7 @@ public class Programa {
         this.clases = clases;
     }
 
-    public String compile() {
-        String salida = "";
-
+    public void compile() {
         if (output.csharp) {
             for (Clase clase : clases) {
                 CompCont ctx = new CompCont(this);
@@ -38,6 +36,5 @@ public class Programa {
                 Archivo.guardar("php/" + clase.nombre + ".php", ctx.code.toString());
             }
         }
-        return salida;
     }
 }
