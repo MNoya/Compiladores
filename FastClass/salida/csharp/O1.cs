@@ -1,4 +1,4 @@
-public class O1 extends Padre implements Interfaz, Interfaz2 { 
+public class O1 : Padre, Interfaz, Interfaz2 { 
 	String p;
 	int read;
 	Libro read_write;
@@ -26,7 +26,7 @@ public class O1 extends Padre implements Interfaz, Interfaz2 {
 		return this.read_constructor;
 	}
 
-	public class O2 extends Padre implements Interfaz, Interfaz2 { 
+	public class O2 : Padre, Interfaz, Interfaz2 { 
 		String read_write;
 
 		public O2(String read_write) {
@@ -36,7 +36,7 @@ public class O1 extends Padre implements Interfaz, Interfaz2 {
 			this.read_write = read_write;
 		}
 
-		public class O3 extends Padre implements Interfaz, Interfaz2 { 
+		public class O3 : Padre, Interfaz, Interfaz2 { 
 			String read_only;
 
 			public O3(String read_only) {
@@ -46,7 +46,7 @@ public class O1 extends Padre implements Interfaz, Interfaz2 {
 				this.read_only = read_only;
 			}
 
-			public class O4 extends Padre implements Interfaz, Interfaz2 { 
+			public class O4 : Padre, Interfaz, Interfaz2 { 
 				String write_only;
 
 				public O4(String write_only) {

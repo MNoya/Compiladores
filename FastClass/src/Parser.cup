@@ -239,7 +239,14 @@ repeat$param ::=
             $0 = new ArrayList<Parametro>();
             RESULT = $0; 
         :}
-    |   repeat$param:$1 param:$2 
+    |   param:$1
+    	{:
+    		List<Parametro> $0;
+            $0 = new ArrayList<Parametro>();
+            $0.add($1);
+            RESULT = $0;
+    	:}    
+    |   repeat$param:$1 COMMA param:$2 
         {:
             List<Parametro> $0;
             $1.add($2);

@@ -1,10 +1,14 @@
-output java, php
+output java, php, csharp
 
-class O1(String p) Padre : Interfaz Interfaz2 {
-    class O2(String p) Padre : Interfaz Interfaz2 {
-        class O3(String p) Padre : Interfaz Interfaz2 {
-            class O4(String p) Padre : Interfaz Interfaz2 {
-                
+class O1(String p, int r read, Libro rw read_write, Cuaderno wc read_constructor) Padre : Interfaz Interfaz2 {
+    class O2(String rw read_write) Padre : Interfaz Interfaz2 {
+        class O3(String r read_only) Padre : Interfaz Interfaz2 {
+            class O4(String w write_only) Padre : Interfaz Interfaz2 {
+                ```
+                some
+                source
+                code
+                ```                
             }
         }
     }
