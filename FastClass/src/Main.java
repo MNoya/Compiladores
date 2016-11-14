@@ -9,7 +9,6 @@ public class Main {
 		System.out.println("Loading test cases...");
 		
 		String input = new Scanner(new File("entrada/test1.txt")).useDelimiter("\\Z").next();
-		//System.out.println(content);
 		
         try {
             Programa prog = (Programa) Parser.parse(input).value;

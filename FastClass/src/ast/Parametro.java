@@ -52,16 +52,17 @@ public class Parametro implements Nodo {
     public CompCont compileJava(CompCont ctx) {
         clase.indentar(ctx);
         clase.listaParametros += "\t" + tipo + " " + nombre + ";\n";
-
+        String indent = clase.getIndent();
+        
         if (c) {
             clase.paramsConstructor += tipo + " " + nombre + ", ";
-            clase.initConstructor += "\t\tthis." + nombre + " = " + nombre + ";\n";
+            clase.initConstructor += indent + "\t\tthis." + nombre + " = " + nombre + ";\n";
         }
 
         String camel = (nombre.charAt(0) + "").toUpperCase() + nombre.substring(1);
         
-        clase.gettersSetters += (r) ? "\tpublic " + tipo + " get" + camel + "(){\n\t\treturn this." + nombre + ";\n\t}\n\n" : "";
-        clase.gettersSetters += (w) ? "\tpublic void set" + camel + "(" + tipo + " " + nombre + "){\n\t\tthis." + nombre + " = " + nombre + ";\n\t}\n\n" : "";
+        clase.gettersSetters += (r) ? indent + "\tpublic " + tipo + " get" + camel + "(){\n" + indent +  "\t\treturn this." + nombre + ";\n" + indent + "\t}\n" : "";
+        clase.gettersSetters += (w) ? indent + "\tpublic void set" + camel + "(" + tipo + " " + nombre + "){\n" + indent +  "\t\tthis." + nombre + " = " + nombre + ";\n" + indent +  "\t}\n" : "";
 
         return ctx;
     }

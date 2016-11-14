@@ -35,6 +35,9 @@ public class Clase implements Nodo {
     
     @Override
     public CompCont compileCsharp(CompCont ctx) {
+        if (this.nivel > 0) {
+            ctx.code.append("\n");
+        }
         
         this.indentar(ctx);
         ctx.code.append("public class " + nombre);
@@ -78,24 +81,29 @@ public class Clase implements Nodo {
         if (fuente != null && fuente.length() > 0) {
             this.indentar(ctx);
             ctx.code.append("\t//Codigo fuente original\n");
-            ctx.code.append(fuente);
+            this.indentar(ctx);
+            ctx.code.append("\t"+fuente);
         }
         
         if (subclases != null) {
             for (Clase sub : subclases) {
+                sub.setNivel(this.nivel+1);
                 sub.compileCsharp(ctx);
             }
         }
         
         ctx.code.append("\n");
         this.indentar(ctx);
-        ctx.code.append("}\n");
+        ctx.code.append("}");
         
         return ctx;
     }
     
     @Override
     public CompCont compileJava(CompCont ctx) {
+        if (this.nivel > 0) {
+            ctx.code.append("\n");
+        }
         
         this.indentar(ctx);
         ctx.code.append("public class " + nombre);
@@ -133,18 +141,20 @@ public class Clase implements Nodo {
         if (fuente != null && fuente.length() > 0) {
             this.indentar(ctx);
             ctx.code.append("\t//Codigo fuente original\n");
-            ctx.code.append(fuente);
+            this.indentar(ctx);
+            ctx.code.append("\t"+fuente);
         }
         
         if (subclases != null) {
             for (Clase sub : subclases) {
+                sub.setNivel(this.nivel+1);
                 sub.compileJava(ctx);
             }
         }
         
         ctx.code.append("\n");
         this.indentar(ctx);
-        ctx.code.append("}\n");
+        ctx.code.append("}");
         
         return ctx;
     }
@@ -155,7 +165,7 @@ public class Clase implements Nodo {
             ctx.code.append("<?php \n");
         } else {
             ctx.code.append("\n");
-        }            
+        }          
         
         this.indentar(ctx);
         ctx.code.append("class " + nombre);
@@ -194,7 +204,8 @@ public class Clase implements Nodo {
         if (fuente != null && fuente.length() > 0) {
             this.indentar(ctx);
             ctx.code.append("\t//Codigo fuente original\n");
-            ctx.code.append(fuente);
+            this.indentar(ctx);
+            ctx.code.append("\t"+fuente);
         }
         
         if (subclases != null) {
