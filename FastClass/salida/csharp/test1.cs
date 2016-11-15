@@ -4,7 +4,8 @@ public class test1 : Padre, Interfaz, Interfaz2 {
 	Libro read_write;
 	Cuaderno write_constructor;
 
-	public test1(Cuaderno write_constructor) {
+	public test1(String property, Cuaderno write_constructor) {
+		this.property = property;
 		this.write_constructor = write_constructor;
 	}
 	public Cuaderno write_constructor { set; }

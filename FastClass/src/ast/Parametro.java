@@ -17,13 +17,20 @@ public class Parametro implements Nodo {
         this.nombre = nombre;
         
         if (rwc.indexOf("r") != -1) {
-        	this.r = true;
+        	setR();
         }
         if (rwc.indexOf("w") != -1) {
-        	this.w = true;
+        	setW();
         }
         if (rwc.indexOf("c") != -1) {
-        	this.c = true;
+        	setC();
+        }
+        
+        // Default by omission: Set all
+        if (!this.r && !this.w && !this.c) {
+            setR();
+            setW();
+            setC();
         }
     }
 

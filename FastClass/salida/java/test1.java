@@ -4,8 +4,15 @@ public class test1 extends Padre implements Interfaz, Interfaz2 {
 	Libro read_write;
 	Cuaderno write_constructor;
 
-	public test1(Cuaderno write_constructor) {
+	public test1(String property, Cuaderno write_constructor) {
+		this.property = property;
 		this.write_constructor = write_constructor;
+	}
+	public String getProperty(){
+		return this.property;
+	}
+	public void setProperty(String property){
+		this.property = property;
 	}
 	public int getRead(){
 		return this.read;

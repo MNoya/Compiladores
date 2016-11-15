@@ -5,8 +5,15 @@ class test1 extends Padre implements Interfaz, Interfaz2 {
 	public $read_write;
 	public $write_constructor;
 
-	public __construct($write_constructor) {
+	public __construct($property, $write_constructor) {
+		$this->property = $property;
 		$this->write_constructor = $write_constructor;
+	}
+	public function getProperty(){
+		return $this->property;
+	}
+	public function setProperty($property){
+		$this->property = $property;
 	}
 	public function getRead(){
 		return $this->read;
