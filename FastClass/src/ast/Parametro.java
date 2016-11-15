@@ -45,7 +45,25 @@ public class Parametro implements Nodo {
 
     @Override
     public CompCont compileCsharp(CompCont ctx) {
-        return this.compileJava(ctx);
+        clase.indentar(ctx);
+        clase.listaParametros += "\t" + tipo + " " + nombre + ";\n";
+        String indent = clase.getIndent();
+        
+        if (c) {
+            clase.paramsConstructor += tipo + " " + nombre + ", ";
+            clase.initConstructor += indent + "\t\tthis." + nombre + " = " + nombre + ";\n";
+        }
+        
+        String getSet = "\n" + indent + "\tpublic " + tipo + " " + nombre + " { ";
+        if (r) getSet += "get; ";
+        if (w) getSet += "set; ";
+        
+        if (r || w)
+            clase.gettersSetters = getSet += "}\n";
+        else
+            clase.gettersSetters = "\n" + indent + "\tpublic " + tipo + " " + nombre + ";";
+        
+        return ctx;
     }
 
     @Override

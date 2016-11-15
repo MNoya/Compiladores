@@ -7,17 +7,6 @@ public class test2 : Padre, Interfaz, Interfaz2 {
 	public test2(Cuaderno read_constructor) {
 		this.read_constructor = read_constructor;
 	}
-	public int getRead(){
-		return this.read;
-	}
-	public Libro getRead_write(){
-		return this.read_write;
-	}
-	public void setRead_write(Libro read_write){
-		this.read_write = read_write;
-	}
-	public void setRead_constructor(Cuaderno read_constructor){
-		this.read_constructor = read_constructor;
-	}
+	public Cuaderno read_constructor { set; }
 
 }

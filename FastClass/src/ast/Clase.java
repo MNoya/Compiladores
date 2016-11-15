@@ -76,6 +76,7 @@ public class Clase implements Nodo {
         this.indentar(ctx);
         ctx.code.append("public " + nombre + "(" + paramsConstructor + initConstructor);
         this.indentar(ctx);
+        ctx.code.append("\t}");
         ctx.code.append(gettersSetters);
         
         if (fuente != null && fuente.length() > 0) {
