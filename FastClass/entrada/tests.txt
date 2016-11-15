@@ -1,0 +1,22 @@
+output java, php, csharp
+
+class test1(String property, int r read, Libro rw read_write, Cuaderno wc write_constructor) Padre : Interfaz Interfaz2 {
+    class sub_clase1(String rw read_write) Padre : Interfaz Interfaz2 {
+        class sub_sub_clase_1(String r read_only) : Interfaz Interfaz2 {
+            class sub_sub_sub_clase1(String w write_only) Padre : Interfaz {
+                ```
+                some
+                source
+                code
+                ```    
+            }
+        }
+    }
+    class sub_clase2(String rwc read_write) Padre : {
+        
+    }
+}
+
+class test2(String property, int r read, Libro rw read_write, Cuaderno wc read_constructor) Padre : Interfaz Interfaz2 {
+    
+}
