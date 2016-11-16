@@ -109,7 +109,6 @@ clase ::=
         {:
             RESULT = new Clase($1, $2,$3,null,null,null);
         :}
-        
     | 
          
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 
@@ -144,14 +143,15 @@ clase ::=
         CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS ID:$3 LEFT_CURLY_BRACKET SOURCE_CODE:$4 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2, $3,null,$4,null);
-        :}   
-       
-    |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 LEFT_CURLY_BRACKET SOURCE_CODE:$4 RIGHT_CURLY_BRACKET
+        :}
+	 |
+	   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS COLON repeat$id:$3 LEFT_CURLY_BRACKET SOURCE_CODE:$4 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2,null, $3, $4, null);
         :}  
        
-     |   CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET SOURCE_CODE:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
+     |  
+       CLASS ID:$1 LEFT_PARENTHESIS repeat$param:$2 RIGHT_PARENTHESIS  LEFT_CURLY_BRACKET SOURCE_CODE:$4 repeat$clase:$5 RIGHT_CURLY_BRACKET
         {:
             RESULT = new Clase($1, $2, null,null,$4, $5);
         :} 

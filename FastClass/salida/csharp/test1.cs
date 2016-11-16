@@ -16,36 +16,29 @@ public class test1 : Padre, Interfaz, Interfaz2 {
 		public sub_clase1() {
 		}
 		public String read_write { get; set; }
+		//Codigo fuente original
+		```
+        some
+        source
+        code
+        ```
+        class sub_sub_clase_1(String r read_only) : Interfaz Interfaz2 {
+            ```
+            some2
+            source2
+            code2
+            ```
+            class sub_sub_sub_clase1(String w write_only) Padre : Interfaz {
 
-		public class sub_sub_clase_1 : Interfaz, Interfaz2 { 
-			String read_only;
-
-			public sub_sub_clase_1() {
-			}
-			public String read_only { get; }
-
-			public class sub_sub_sub_clase1 : Padre, Interfaz { 
-				String write_only;
-
-				public sub_sub_sub_clase1() {
-				}
-				public String write_only { set; }
-				//Codigo fuente original
-				```
-                some
-                source
-                code
-                ```
-			}
-		}
-	}
-	public class sub_clase2 : Padre { 
-		String read_write;
-
-		public sub_clase2(String read_write) {
-			this.read_write = read_write;
-		}
-		public String read_write { get; set; }
-
+            }
+        }
+    }
+    
+    class sub_clase2(String rwc read_write) Padre : {
+        ```
+        some2
+        source2
+        code2
+        ```
 	}
 }

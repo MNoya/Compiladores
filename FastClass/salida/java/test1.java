@@ -38,45 +38,29 @@ public class test1 extends Padre implements Interfaz, Interfaz2 {
 		public void setRead_write(String read_write){
 			this.read_write = read_write;
 		}
+		//Codigo fuente original
+		```
+        some
+        source
+        code
+        ```
+        class sub_sub_clase_1(String r read_only) : Interfaz Interfaz2 {
+            ```
+            some2
+            source2
+            code2
+            ```
+            class sub_sub_sub_clase1(String w write_only) Padre : Interfaz {
 
-		public class sub_sub_clase_1 implements Interfaz, Interfaz2 { 
-			String read_only;
-
-			public sub_sub_clase_1() {
-			}
-			public String getRead_only(){
-				return this.read_only;
-			}
-
-			public class sub_sub_sub_clase1 extends Padre implements Interfaz { 
-				String write_only;
-
-				public sub_sub_sub_clase1() {
-				}
-				public void setWrite_only(String write_only){
-					this.write_only = write_only;
-				}
-				//Codigo fuente original
-				```
-                some
-                source
-                code
-                ```
-			}
-		}
-	}
-	public class sub_clase2 extends Padre { 
-		String read_write;
-
-		public sub_clase2(String read_write) {
-			this.read_write = read_write;
-		}
-		public String getRead_write(){
-			return this.read_write;
-		}
-		public void setRead_write(String read_write){
-			this.read_write = read_write;
-		}
-
+            }
+        }
+    }
+    
+    class sub_clase2(String rwc read_write) Padre : {
+        ```
+        some2
+        source2
+        code2
+        ```
 	}
 }

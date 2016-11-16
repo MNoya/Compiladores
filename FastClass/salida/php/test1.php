@@ -39,46 +39,30 @@ class test1 extends Padre implements Interfaz, Interfaz2 {
 		public function setRead_write($read_write){
 			$this->read_write = $read_write;
 		}
+		//Codigo fuente original
+		```
+        some
+        source
+        code
+        ```
+        class sub_sub_clase_1(String r read_only) : Interfaz Interfaz2 {
+            ```
+            some2
+            source2
+            code2
+            ```
+            class sub_sub_sub_clase1(String w write_only) Padre : Interfaz {
 
-		class sub_sub_clase_1 implements Interfaz, Interfaz2 { 
-			public $read_only;
-
-			public __construct() {
-			}
-			public function getRead_only(){
-				return $this->read_only;
-			}
-
-			class sub_sub_sub_clase1 extends Padre implements Interfaz { 
-				public $write_only;
-
-				public __construct() {
-				}
-				public function setWrite_only($write_only){
-					$this->write_only = $write_only;
-				}
-				//Codigo fuente original
-				```
-                some
-                source
-                code
-                ```
-			}
-		}
-	}
-	class sub_clase2 extends Padre { 
-		public $read_write;
-
-		public __construct($read_write) {
-			$this->read_write = $read_write;
-		}
-		public function getRead_write(){
-			return $this->read_write;
-		}
-		public function setRead_write($read_write){
-			$this->read_write = $read_write;
-		}
-
+            }
+        }
+    }
+    
+    class sub_clase2(String rwc read_write) Padre : {
+        ```
+        some2
+        source2
+        code2
+        ```
 	}
 }
 ?>
